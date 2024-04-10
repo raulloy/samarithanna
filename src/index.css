@@ -76,9 +76,9 @@ main {
 }
 
 .product-card img {
-  height: 300px; /* Adjust based on your preference */
-  object-fit: cover; /* Keeps aspect ratio, might crop images */
-  width: 100%; /* Ensures image takes full width of card */
+  height: 300px;
+  object-fit: cover;
+  width: 100%;
 }
 
 .product-card-body {

@@ -74,7 +74,9 @@ export default function OrderListScreen() {
               <th>Total</th>
               <th>Pagado</th>
               <th>Entregado</th>
-              <th>Detalles</th>
+              <th>Fecha de entrega estimada</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -88,6 +90,11 @@ export default function OrderListScreen() {
                 {/* <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td> */}
                 <td>{order.isDelivered ? 'Si' : 'No'}</td>
                 <td>
+                  {order.estimatedDelivery
+                    ? order.estimatedDelivery.substring(0, 10)
+                    : 'No'}
+                </td>
+                <td>
                   <Button
                     type="button"
                     variant="light"
@@ -96,6 +103,15 @@ export default function OrderListScreen() {
                     }}
                   >
                     Detalle
+                  </Button>
+                </td>
+                <td>
+                  <Button
+                    type="button"
+                    variant="light"
+                    onClick={() => navigate(`/admin/order/${order._id}`)}
+                  >
+                    Asignar fecha
                   </Button>
                 </td>
               </tr>

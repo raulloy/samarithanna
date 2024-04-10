@@ -23,6 +23,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 export default function UserListScreen() {
   const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -52,6 +53,7 @@ export default function UserListScreen() {
     };
     fetchData();
   }, [userInfo]);
+
   return (
     <div>
       <Helmet>
@@ -79,7 +81,7 @@ export default function UserListScreen() {
                 <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin ? 'YES' : 'NO'}</td>
+                <td>{user.isAdmin ? 'Si' : 'No'}</td>
                 <td></td>
               </tr>
             ))}
