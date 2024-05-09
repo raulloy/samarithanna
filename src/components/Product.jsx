@@ -17,13 +17,33 @@ function Product(props) {
   const addToCartHandler = async () => {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantityToAdd = existItem ? existItem.quantity + quantity : quantity;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(
+      `https://samarithanna-api.onrender.com/api/products/${product._id}`
+    );
     if (data.countInStock < quantityToAdd) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
+      payload: { ...product, quantity: quantityToAdd },
+    });
+  };
+
+  const addReturnsHandler = async () => {
+    const existItem = state.returns.returnItems.find(
+      (x) => x._id === product._id
+    );
+    const quantityToAdd = existItem ? existItem.quantity + quantity : quantity;
+    const { data } = await axios.get(
+      `https://samarithanna-api.onrender.com/api/products/${product._id}`
+    );
+    if (data.countInStock < quantityToAdd) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    ctxDispatch({
+      type: 'RETURNS_ADD_ITEM',
       payload: { ...product, quantity: quantityToAdd },
     });
   };
@@ -75,6 +95,16 @@ function Product(props) {
               Añadir al pedido
             </Button>
           )}
+          <Button
+            onClick={addReturnsHandler}
+            style={{
+              backgroundColor: '#005b27',
+              borderColor: '#005b27',
+              marginTop: '10px',
+            }}
+          >
+            Add to Returns
+          </Button>
         </div>
       </Card.Body>
     </Card>

@@ -15,6 +15,7 @@ export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
+    returns: { returnItems },
   } = state;
 
   const updateCartHandler = async (item, quantity) => {
@@ -33,6 +34,24 @@ export default function CartScreen() {
 
   const removeItemHandler = (item) => {
     ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
+
+  const updateReturnsHandler = async (item, quantity) => {
+    const { data } = await axios.get(
+      `https://samarithanna-api.onrender.com/api/products/${item._id}`
+    );
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    ctxDispatch({
+      type: 'RETURNS_ADD_ITEM',
+      payload: { ...item, quantity },
+    });
+  };
+
+  const removeReturnsItemHandler = (item) => {
+    ctxDispatch({ type: 'RETURNS_REMOVE_ITEM', payload: item });
   };
 
   const checkoutHandler = () => {
@@ -140,6 +159,63 @@ export default function CartScreen() {
               </ListGroup>
             </Card.Body>
           </Card>
+        </Col>
+      </Row>
+      <br />
+      <h2>Devoluciones</h2>
+      <Row>
+        <Col md={8}>
+          <ListGroup>
+            {returnItems.map((item) => (
+              <ListGroup.Item key={item._id}>
+                <Row className="align-items-center">
+                  <Col md={4}>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="img-fluid rounded img-thumbnail"
+                    ></img>{' '}
+                    <Link
+                      to={`/product/${item.slug}`}
+                      style={{ color: '#005b27' }}
+                    >
+                      {item.name}
+                    </Link>
+                  </Col>
+                  <Col md={3}>
+                    <Button
+                      onClick={() =>
+                        updateReturnsHandler(item, item.quantity - 1)
+                      }
+                      variant="light"
+                      disabled={item.quantity === 1}
+                    >
+                      <i className="fas fa-minus-circle"></i>
+                    </Button>{' '}
+                    <span>{item.quantity}</span>{' '}
+                    <Button
+                      variant="light"
+                      onClick={() =>
+                        updateReturnsHandler(item, item.quantity + 1)
+                      }
+                      disabled={item.quantity === item.countInStock}
+                    >
+                      <i className="fas fa-plus-circle"></i>
+                    </Button>
+                  </Col>
+                  <Col md={3}>${item.price}</Col>
+                  <Col md={2}>
+                    <Button
+                      onClick={() => removeReturnsItemHandler(item)}
+                      variant="light"
+                    >
+                      <i className="fas fa-trash"></i>
+                    </Button>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
         </Col>
       </Row>
     </div>

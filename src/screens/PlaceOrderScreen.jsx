@@ -34,7 +34,7 @@ export default function PlaceOrderScreen() {
   });
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const { cart, returns, userInfo } = state;
   const {
     cart: { shippingAddress },
   } = state;
@@ -61,6 +61,7 @@ export default function PlaceOrderScreen() {
           shippingPrice: cart.shippingPrice,
           taxPrice: cart.taxPrice,
           totalPrice: cart.totalPrice,
+          returnItems: returns.returnItems,
         },
         {
           headers: {
@@ -69,8 +70,10 @@ export default function PlaceOrderScreen() {
         }
       );
       ctxDispatch({ type: 'CART_CLEAR' });
+      ctxDispatch({ type: 'RETURNS_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
+      localStorage.removeItem('returnItems');
       navigate(`/order/${data.order._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
@@ -203,6 +206,43 @@ export default function PlaceOrderScreen() {
                   {loading && <LoadingBox></LoadingBox>}
                 </ListGroup.Item>
               </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={8}>
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>Devoluciones</Card.Title>
+              <ListGroup variant="flush">
+                {returns.returnItems.map((item) => (
+                  <ListGroup.Item key={item._id}>
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="img-fluid rounded img-thumbnail"
+                        ></img>{' '}
+                        <Link
+                          to={`/product/${item.slug}`}
+                          style={{ color: '#005b27' }}
+                        >
+                          {item.name}
+                        </Link>
+                      </Col>
+                      <Col md={3}>
+                        <span>{item.quantity}</span>
+                      </Col>
+                      <Col md={3}>${item.price}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              <Link to="/cart" style={{ color: '#005b27' }}>
+                Editar
+              </Link>
             </Card.Body>
           </Card>
         </Col>

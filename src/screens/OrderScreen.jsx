@@ -284,6 +284,35 @@ export default function OrderScreen() {
               </ListGroup>
             </Card.Body>
           </Card>
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>Devoluciones</Card.Title>
+              <ListGroup variant="flush">
+                {order.returnItems.map((item) => (
+                  <ListGroup.Item key={item._id}>
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="img-fluid rounded img-thumbnail"
+                        ></img>{' '}
+                        <Link
+                          to={`/product/${item.slug}`}
+                          style={{ color: '#005b27' }}
+                        >
+                          {item.name}
+                        </Link>
+                      </Col>
+                      <Col md={3}>
+                        <span>{item.quantity}</span>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </Card.Body>
+          </Card>
         </Col>
         <Col md={4}>
           <Card className="mb-3">
