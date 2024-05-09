@@ -1,0 +1,40 @@
+.buttons {
+  gap: 1rem;
+}
+
+.cart-btn {
+  padding: 8px;
+  color: var(--PrimaryColor);
+  border: 2px solid var(--PrimaryColor);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+}
+.cart-btn:hover {
+  background: var(--PrimaryColor);
+  color: var(--paleGreen);
+}
+.transparent {
+  background: none;
+  border: 2px solid var(--paleGreen);
+  color: var(--paleGreen);
+}
+.transparent:hover {
+  background: var(--paleGreen);
+  color: var(--PrimaryColor);
+}
+.transparent-btn {
+  padding: 10px;
+  margin: 10px;
+  color: var(--PrimaryColor);
+  border: 2px solid var(--PrimaryColor);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+}
+.transparent-btn:hover {
+  background: var(--PrimaryColor);
+  color: var(--paleGreen);
+}

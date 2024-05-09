@@ -1,0 +1,144 @@
+.profile {
+  width: 100%;
+  /* margin: auto; */
+  border-radius: 10px;
+  overflow: hidden;
+  flex-basis: 70%;
+  /* box-shadow: 0 7px 50px rgb(214, 223, 213); */
+}
+.profile .container {
+  height: 75vh;
+  width: 100%;
+  margin: auto;
+  justify-content: space-between;
+  border-radius: 10px;
+  /* background: hsl(0, 0%, 91%); */
+  background: var(--whiteColor);
+  overflow: scroll;
+}
+.profile .container .formDiv {
+  flex-basis: 50%;
+  margin: auto;
+  flex-direction: column;
+  gap: 1.5rem;
+  transform: translateY(-1rem);
+}
+.profile .container .formDiv .headerDiv {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+.profile .container .formDiv .headerDiv h3 {
+  font-size: 25px;
+  color: var(--blackColor);
+  font-weight: 600;
+}
+.profile .container .formDiv .form {
+  gap: 1rem;
+  width: 100%;
+}
+.profile .container .formDiv .form .inputDiv .icon {
+  color: var(--greyText);
+}
+.profile .container .formDiv .form .inputDiv input {
+  background: none;
+  outline: none;
+  border: none;
+  width: 100%;
+}
+.profile .container .formDiv .form .inputDiv label {
+  color: var(--blackColor);
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0.5rem 0;
+  display: block;
+}
+.profile .container .formDiv .form .inputDiv .input {
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--inputColor);
+  border-radius: 10px;
+}
+.profile .container .formDiv .form .btn {
+  padding: 0.8rem;
+  background: var(--primaryColor);
+  border-radius: 10px;
+  color: var(--whiteColor);
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  font-size: 16px;
+  width: 100%;
+  gap: 0.5rem;
+  transition: 0.3s ease;
+}
+.profile .container .formDiv .form .btn .icon {
+  font-size: 25px;
+  transition: 0.3s ease;
+}
+.profile .container .formDiv .form .btn:hover {
+  background: var(--hoverColor);
+  color: var(--blackColor);
+}
+.profile .container .formDiv .form .btn:hover .icon {
+  color: var(--blackColor);
+  transform: translateX(5px);
+}
+.profile .container .formDiv .form .forgotPassword {
+  font-size: 13px;
+  color: var(--blackColor);
+  opacity: 0.7;
+  text-align: center;
+}
+.profile .container .formDiv .form .forgotPassword a {
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: 1;
+}
+
+@media screen and (max-width: 602px) {
+  .profile .container {
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .profile .container .formDiv {
+    gap: 1rem;
+    transform: translateY(-0.5rem);
+  }
+  .profile .container .formDiv .headerDiv {
+    padding: 1rem 0;
+  }
+  .profile .container .formDiv .headerDiv img {
+    width: 40px;
+  }
+  .profile .container .formDiv .headerDiv h3 {
+    font-size: 20px;
+  }
+  .profile .container .formDiv .form {
+    gap: 0.5rem;
+  }
+  .profile .container .formDiv .form .inputDiv input {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 678px) {
+  .profile .container .formDiv .headerDiv {
+    padding: 1.5rem 0;
+  }
+  .profile .container .formDiv .headerDiv h3 {
+    font-size: 20px;
+  }
+  .profile .container .formDiv .form .inputDiv input {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+@media screen and (max-width: 927px) {
+  .profile .container {
+    width: 85%;
+  }
+}
+::-webkit-scrollbar {
+  display: none;
+}

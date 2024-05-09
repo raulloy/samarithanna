@@ -1,0 +1,46 @@
+.dashboard .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.dashboard .col {
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 7px 50px rgb(214, 223, 213);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+.chart-container {
+  margin-top: 30px;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 7px 50px rgb(214, 223, 213);
+}
+
+.chart-container h2 {
+  margin: 1rem;
+}
