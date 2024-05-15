@@ -252,6 +252,9 @@ label {
     padding: 0.6rem;
     font-size: 16px;
   }
+  .totals {
+    font-size: 80%;
+  }
 }
 
 /* @media screen and (max-width: 650px) {

@@ -17,11 +17,13 @@ const PlaceOrder = () => {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
+  const {
+    returns: { returnItems },
+  } = state;
 
-  cart.itemsPrice = round2(
-    cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
-  );
-  cart.totalPrice = cart.itemsPrice;
+  cart.subtotal = cart.cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+  cart.ieps = cart.cartItems.reduce((a, c) => a + c.ieps * c.quantity, 0);
+  cart.total = round2(cart.subtotal + cart.ieps);
 
   const placeOrderHandler = async () => {
     try {
@@ -31,10 +33,12 @@ const PlaceOrder = () => {
         `${apiURL}/api/orders`,
         {
           orderItems: cart.cartItems,
+          returnItems: returnItems,
+          purchaseOrder: cart.purchaseOrder,
           shippingAddress: cart.shippingAddress,
-          itemsPrice: cart.itemsPrice,
-          taxPrice: cart.taxPrice,
-          totalPrice: cart.totalPrice,
+          subtotal: cart.subtotal,
+          ieps: cart.ieps,
+          totalPrice: cart.total,
         },
         {
           headers: {
@@ -45,6 +49,7 @@ const PlaceOrder = () => {
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
+      localStorage.removeItem('returnItems');
       navigate(`/order/${data.order._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
@@ -72,8 +77,14 @@ const PlaceOrder = () => {
               <h3 className="card-title">Shipping</h3>
               <p className="card-text">
                 <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {cart.shippingAddress.address}
+                <strong>Address: </strong> {cart.shippingAddress.address} <br />
+                {cart.purchaseOrder && (
+                  <>
+                    <strong>PO:</strong> {cart.purchaseOrder}
+                  </>
+                )}
               </p>
+
               <Link to={'/shipping'}>Edit</Link>
             </div>
           </div>
@@ -104,7 +115,39 @@ const PlaceOrder = () => {
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
                       <div className="item-quantity">{item.quantity}</div>
-                      <div className="item-price">${item.price}</div>
+                      {/* <div className="item-price">${item.price}</div>
+                      <div className="item-price">${item.ieps}</div> */}
+                      <div className="item-price">
+                        ${round2(item.quantity * (item.price + item.ieps))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link to={'/cart'}>Edit</Link>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-body">
+              <h3 className="card-title">Returns</h3>
+              <div className="list-group">
+                {returnItems.map((item) => (
+                  <div className="list-group-item" key={item._id}>
+                    <div className="item-row">
+                      <div className="item-info">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="item-image"
+                        />
+                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                      </div>
+                      <div className="item-quantity">{item.quantity}</div>
+                      {/* <div className="item-price">${item.price}</div>
+                      <div className="item-price">${item.ieps}</div> */}
+                      {/* <div className="item-price">
+                        ${round2(item.quantity * (item.price + item.ieps))}
+                      </div> */}
                     </div>
                   </div>
                 ))}
@@ -122,25 +165,28 @@ const PlaceOrder = () => {
                 <div className="list-group-item">
                   <div className="summary-row">
                     <div>Items</div>
-                    <div>${cart.itemsPrice.toFixed(2)}</div>
+                    <div>
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                    </div>
+                    {/* <div>${cart.itemsPrice.toFixed(2)}</div> */}
                   </div>
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <div>Shipping</div>
-                    <div>${0}</div>
+                    <div>Subtotal</div>
+                    <div>${cart.subtotal}</div>
                   </div>
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <div>Tax</div>
-                    <div>${0}</div>
+                    <div>IEPS</div>
+                    <div>${cart.ieps}</div>
                   </div>
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <strong>Order Total</strong>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>Order Total</strong> <br />
+                    <strong>${cart.total.toFixed(2)}</strong>
                   </div>
                 </div>
                 <div className="list-group-item">

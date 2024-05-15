@@ -11,6 +11,15 @@
   align-items: flex-start;
 }
 
+.input .datePicker {
+  flex-grow: 1;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
 @media screen and (max-width: 918px) {
   .bottom {
     flex-direction: column;

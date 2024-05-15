@@ -57,6 +57,7 @@ const OrderHistory = () => {
                 <th>TOTAL</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
+                <th>DELIVERED DATE</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -67,9 +68,10 @@ const OrderHistory = () => {
                   <td>{formatDate(order.createdAt.substring(0, 10))}</td>
                   <td>{order.totalPrice.toFixed(2)}</td>
                   <td>{order.isPaid ? 'Yes' : 'No'}</td>
+                  <td>{order.isDeliverated ? 'Yes' : 'No'}</td>
                   <td>
-                    {order.isDelivered
-                      ? formatDate(order.deliveredAt.substring(0, 10))
+                    {order.estimatedDelivery
+                      ? formatDate(order.estimatedDelivery.substring(0, 10))
                       : 'No'}
                   </td>
                   <td>

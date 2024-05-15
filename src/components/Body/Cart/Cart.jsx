@@ -56,6 +56,7 @@ const Cart = () => {
             <label className="cart-product-image">Image</label>
             <label className="cart-product-details">Product</label>
             <label className="cart-product-price">Price</label>
+            <label className="cart-product-price">IEPS</label>
             <label className="cart-product-details">Quantity</label>
             <label className="product-removal">Remove</label>
             <label className="product-line-price">Total</label>
@@ -78,6 +79,7 @@ const Cart = () => {
                   {/* <p className="product-description">{item.description}</p> */}
                 </div>
                 <div className="cart-product-price">{item.price}</div>
+                <div className="cart-product-price">{item.ieps}</div>
                 <div className="cart-product-details">
                   <button
                     className="qty-btn"
@@ -104,7 +106,7 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="product-line-price">
-                  {item.price * item.quantity}
+                  {item.quantity * (item.price + item.ieps)}
                 </div>
               </div>
             ))}
@@ -164,21 +166,24 @@ const Cart = () => {
               </div>
             </div>
             <div className="totals-item">
-              <label>Tax (16%)</label>
+              <label>IEPS</label>
               <div className="totals-value" id="cart-tax">
-                3.60
+                {cartItems.reduce((a, c) => a + c.ieps * c.quantity, 0)}
               </div>
             </div>
-            <div className="totals-item">
+            {/* <div className="totals-item">
               <label>Shipping</label>
               <div className="totals-value" id="cart-shipping">
                 15.00
               </div>
-            </div>
+            </div> */}
             <div className="totals-item totals-item-total">
               <label>Grand Total</label>
               <div className="totals-value" id="cart-total">
-                90.57
+                {(
+                  cartItems.reduce((a, c) => a + c.price * c.quantity, 0) +
+                  cartItems.reduce((a, c) => a + c.ieps * c.quantity, 0)
+                ).toFixed(2)}
               </div>
             </div>
           </div>

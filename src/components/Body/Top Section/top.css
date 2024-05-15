@@ -312,7 +312,10 @@
   }
 }
 @media screen and (max-width: 490px) {
-  .headerSection .adminDiv {
+  /* .headerSection .adminDiv {
+    display: none;
+  } */
+  .headerSection .adminDiv .adminImage {
     display: none;
   }
   .headerSection .title {

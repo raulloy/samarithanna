@@ -35,7 +35,7 @@ const Product = (props) => {
 
   return (
     <div className="singleItem">
-      <Link to={`/product/${product.slug}`}>
+      <Link to={`/product/${product.slug}`} className="item-link">
         <div className="img-container">
           <img src={product.image} alt={product.name} />
         </div>

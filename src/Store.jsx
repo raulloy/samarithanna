@@ -93,6 +93,15 @@ function reducer(state, action) {
         },
       };
 
+    case 'SAVE_PURCHASE_ORDER':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          purchaseOrder: action.payload,
+        },
+      };
+
     default:
       return state;
   }

@@ -14,15 +14,12 @@ const ShippingAddress = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     userInfo,
-    cart: { shippingAddress },
+    cart: { shippingAddress, purchaseOrder },
   } = state;
 
-  const [fullName, setFullName] = useState(shippingAddress.fullName || '');
+  const [fullName, setFullName] = useState(shippingAddress?.fullName || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
-  // const [city, setCity] = useState(shippingAddress.city || '');
-  // const [postalCode, setPostalCode] = useState(
-  //   shippingAddress.postalCode || ''
-  // );
+  const [purchaseOrderState, setPurchaseOrder] = useState(purchaseOrder || '');
 
   useEffect(() => {
     if (!userInfo) {
@@ -39,6 +36,10 @@ const ShippingAddress = () => {
         address,
       },
     });
+    ctxDispatch({
+      type: 'SAVE_PURCHASE_ORDER',
+      payload: purchaseOrderState,
+    });
     localStorage.setItem(
       'shippingAddress',
       JSON.stringify({
@@ -46,6 +47,7 @@ const ShippingAddress = () => {
         address,
       })
     );
+    localStorage.setItem('purchaseOrder', purchaseOrderState);
     navigate('/place-order');
   };
 
@@ -90,21 +92,20 @@ const ShippingAddress = () => {
                   />
                 </div>
               </div>
-              {/* <div className="inputDiv">
-                <label htmlFor="city">City</label>
+              <div className="inputDiv">
+                <label htmlFor="purchaseOrder">Purchase Order</label>
                 <div className="input flex">
                   <FaUserShield className="icon" />
                   <input
                     type="text"
-                    value={city}
-                    required
-                    id="city"
-                    placeholder="Enter your address"
-                    onChange={(e) => setCity(e.target.value)}
+                    value={purchaseOrderState}
+                    id="purchaseOrder"
+                    placeholder="Enter your PO"
+                    onChange={(e) => setPurchaseOrder(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="inputDiv">
+              {/* <div className="inputDiv">
                 <label htmlFor="postalCode">PostalCode</label>
                 <div className="input flex">
                   <FaUserShield className="icon" />

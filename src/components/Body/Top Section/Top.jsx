@@ -1,5 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './top.css';
 
 // Imported Icons ===========>
@@ -14,6 +15,26 @@ import arab_bakery from '../../Assets/pita-arab-cuisine-bakery.png';
 import video from '../../Assets/video.mp4';
 
 import { Store } from '../../../Store';
+import { apiURL, getError } from '../../../utils';
+import LoadingBox from '../LoadingBox/LoadingBox';
+import MessageBox from '../MessageBox/MessageBox';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return {
+        ...state,
+        summary: action.payload,
+        loading: false,
+      };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 const Top = () => {
   const { state } = useContext(Store);
@@ -21,6 +42,29 @@ const Top = () => {
 
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
+
+  const [{ loading, summary, error }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`${apiURL}/api/orders/mine/stats`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: 'FETCH_FAIL',
+          payload: getError(err),
+        });
+      }
+    };
+    fetchData();
+  }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -51,7 +95,7 @@ const Top = () => {
 
         <div className="adminDiv flex">
           <div className="icon-wrapper">
-            <Link to={'/cart'}>
+            <Link to="/cart">
               <MdOutlineShoppingCart className="icon" />
             </Link>
             <span className="cart-quantity">
@@ -83,28 +127,46 @@ const Top = () => {
         </div>
 
         <div className="leftCard flex">
-          <div className="main flex">
-            <div className="textDiv">
-              <h1>My Stats</h1>
+          {loading ? (
+            <LoadingBox />
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <div className="main flex">
+              <div className="textDiv">
+                <h1>My Stats</h1>
 
-              <div className="flex">
-                <span>
-                  Today <br /> <small>4 Orders</small>
-                </span>
-                <span>
-                  This Month <br /> <small>175 Orders</small>
-                </span>
+                <div className="flex">
+                  <span>
+                    Today <br />{' '}
+                    <small>
+                      {summary.todayOrdersCount === 1
+                        ? summary.todayOrdersCount + ' Order'
+                        : summary.todayOrdersCount + ' Orders'}
+                    </small>
+                  </span>
+                  <span>
+                    This Month <br />{' '}
+                    <small>
+                      {summary.monthOrdersCount === 1
+                        ? summary.monthOrdersCount + ' Order'
+                        : summary.monthOrdersCount + ' Orders'}
+                    </small>
+                  </span>
+                </div>
+
+                <Link to="/orderhistory">
+                  <span className="flex link">
+                    Go to my orders <BsArrowRightShort className="icon" />
+                  </span>
+                </Link>
               </div>
 
-              <span className="flex link">
-                Go to my orders <BsArrowRightShort className="icon" />
-              </span>
+              <div className="imgDiv">
+                <img src={arab_bakery} alt="Image Name" />
+              </div>
             </div>
-
-            <div className="imgDiv">
-              <img src={arab_bakery} alt="Image Name" />
-            </div>
-          </div>
+          )}
 
           {/* We shall use this card later .... */}
           <div className="sideBarCard">
