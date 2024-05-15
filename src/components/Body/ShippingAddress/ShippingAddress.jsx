@@ -18,7 +18,7 @@ const ShippingAddress = () => {
   } = state;
 
   const [fullName, setFullName] = useState(shippingAddress?.fullName || '');
-  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [address, setAddress] = useState(shippingAddress?.address || '');
   const [purchaseOrderState, setPurchaseOrder] = useState(purchaseOrder || '');
 
   useEffect(() => {
