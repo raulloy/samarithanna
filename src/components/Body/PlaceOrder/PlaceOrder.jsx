@@ -66,26 +66,27 @@ const PlaceOrder = () => {
   return (
     <div className="mainContent">
       <Helmet>
-        <title>Place Order</title>
+        <title>Pedido</title>
       </Helmet>
-      <h1>Preview Order</h1>
+      <h2>Vista Previa del Pedido</h2>
 
       <div className="order-container">
         <div className="content">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Shipping</h3>
+              <h3 className="card-title">Envío</h3>
               <p className="card-text">
-                <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {cart.shippingAddress.address} <br />
+                <strong>Nombre:</strong> {cart.shippingAddress.fullName} <br />
+                <strong>Dirección: </strong> {cart.shippingAddress.address}{' '}
+                <br />
                 {cart.purchaseOrder && (
                   <>
-                    <strong>PO:</strong> {cart.purchaseOrder}
+                    <strong>Orden de Compra:</strong> {cart.purchaseOrder}
                   </>
                 )}
               </p>
 
-              <Link to={'/shipping'}>Edit</Link>
+              <Link to={'/shipping'}>Editar</Link>
             </div>
           </div>
 
@@ -101,7 +102,7 @@ const PlaceOrder = () => {
 
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Items</h3>
+              <h3 className="card-title">Productos</h3>
               <div className="list-group">
                 {cart.cartItems.map((item) => (
                   <div className="list-group-item" key={item._id}>
@@ -124,12 +125,12 @@ const PlaceOrder = () => {
                   </div>
                 ))}
               </div>
-              <Link to={'/cart'}>Edit</Link>
+              <Link to={'/cart'}>Editar</Link>
             </div>
           </div>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Returns</h3>
+              <h3 className="card-title">Devoluciones</h3>
               <div className="list-group">
                 {returnItems.map((item) => (
                   <div className="list-group-item" key={item._id}>
@@ -152,7 +153,7 @@ const PlaceOrder = () => {
                   </div>
                 ))}
               </div>
-              <Link to={'/cart'}>Edit</Link>
+              <Link to={'/cart'}>Editar</Link>
             </div>
           </div>
         </div>
@@ -160,11 +161,11 @@ const PlaceOrder = () => {
         <div className="sidebar">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Order Summary</h3>
+              <h3 className="card-title">Resumen del Pedido</h3>
               <div className="list-group">
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <div>Items</div>
+                    <div>Artículos</div>
                     <div>
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </div>
@@ -174,18 +175,18 @@ const PlaceOrder = () => {
                 <div className="list-group-item">
                   <div className="summary-row">
                     <div>Subtotal</div>
-                    <div>${cart.subtotal}</div>
+                    <div>${cart.subtotal.toFixed(2)}</div>
                   </div>
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
                     <div>IEPS</div>
-                    <div>${cart.ieps}</div>
+                    <div>${cart.ieps.toFixed(2)}</div>
                   </div>
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <strong>Order Total</strong> <br />
+                    <strong>Total</strong> <br />
                     <strong>${cart.total.toFixed(2)}</strong>
                   </div>
                 </div>
@@ -196,7 +197,7 @@ const PlaceOrder = () => {
                       onClick={placeOrderHandler}
                       disabled={cart.cartItems.length === 0}
                     >
-                      Place Order
+                      Realizar pedido
                     </button>
                     {loading && <LoadingBox></LoadingBox>}
                   </div>

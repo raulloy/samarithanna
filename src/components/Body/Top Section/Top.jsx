@@ -75,15 +75,15 @@ const Top = () => {
     <div className="topSection">
       <div className="headerSection flex">
         <div className="title">
-          <h1>Welcome to Samarithanna.</h1>
-          <p>Hi {userInfo.name}, Welcome back!</p>
+          <h1>Bienvenido a Samarithanna.</h1>
+          <p>Hola {userInfo.name}, ¡qué bueno verte de nuevo!</p>
         </div>
 
         <div className="searchBar flex">
           <form className="d-flex me-auto" onSubmit={submitHandler}>
             <input
               type="text"
-              placeholder="Search products"
+              placeholder="Jocoque, Pan Árabe..."
               id="searchBox"
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -134,30 +134,30 @@ const Top = () => {
           ) : (
             <div className="main flex">
               <div className="textDiv">
-                <h1>My Stats</h1>
+                <h1>Mis pedidos</h1>
 
                 <div className="flex">
                   <span>
-                    Today <br />{' '}
+                    Hoy <br />{' '}
                     <small>
                       {summary.todayOrdersCount === 1
-                        ? summary.todayOrdersCount + ' Order'
-                        : summary.todayOrdersCount + ' Orders'}
+                        ? summary.todayOrdersCount + ' Pedido'
+                        : summary.todayOrdersCount + ' Pedidos'}
                     </small>
                   </span>
                   <span>
-                    This Month <br />{' '}
+                    Este mes <br />{' '}
                     <small>
                       {summary.monthOrdersCount === 1
-                        ? summary.monthOrdersCount + ' Order'
-                        : summary.monthOrdersCount + ' Orders'}
+                        ? summary.monthOrdersCount + ' Pedido'
+                        : summary.monthOrdersCount + ' Pedidos'}
                     </small>
                   </span>
                 </div>
 
                 <Link to="/orderhistory">
                   <span className="flex link">
-                    Go to my orders <BsArrowRightShort className="icon" />
+                    Ir a mis pedidos <BsArrowRightShort className="icon" />
                   </span>
                 </Link>
               </div>
@@ -175,13 +175,12 @@ const Top = () => {
               <div className="circle1"></div>
               <div className="circle2"></div>
 
-              <h3>Help Center</h3>
+              <h3>¿Necesitas ayuda?</h3>
               <p>
-                Having trouble in Planti, please contact us from for more
-                questions.
+                ¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.
               </p>
 
-              <button className="btn">Go to help center</button>
+              <button className="btn">Contactar</button>
             </div>
           </div>
         </div>

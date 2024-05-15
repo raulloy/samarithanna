@@ -8,6 +8,7 @@ import { Store } from '../../../Store';
 import { apiURL, getError, getOrderReducer } from '../../../utils';
 import LoadingBox from '../LoadingBox/LoadingBox';
 import MessageBox from '../MessageBox/MessageBox';
+import { AiOutlineSwapRight } from 'react-icons/ai';
 
 const Order = () => {
   const { state } = useContext(Store);
@@ -139,39 +140,38 @@ const Order = () => {
   ) : (
     <div className="mainContent">
       <Helmet>
-        <title>Order</title>
+        <title>Pedido</title>
       </Helmet>
-      <h1>Order S-{order._id.slice(-5)}</h1>
+      <h1>Pedido S-{order._id.slice(-5)}</h1>
 
       <div className="order-container">
         <div className="content">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Shipping</h3>
+              <h3 className="card-title">Envío</h3>
               <p className="card-text">
-                <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {order.shippingAddress.address},{' '}
-                {order.shippingAddress.city}, {order.shippingAddress.postalCode}
+                <strong>Nombre:</strong> {order.shippingAddress.fullName} <br />
+                <strong>Dirección: </strong> {order.shippingAddress.address}
               </p>
               {order.isDelivered ? (
-                <MessageBox variant="success">Delivered</MessageBox>
+                <MessageBox variant="success">Entregado</MessageBox>
               ) : (
-                <MessageBox variant="danger">Not Delivered</MessageBox>
+                <MessageBox variant="danger">No Entregado</MessageBox>
               )}
             </div>
           </div>
 
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Payment</h3>
+              <h3 className="card-title">Pago</h3>
               <p className="card-text">
-                <strong>Method: </strong>
-                {'Payment Method'}
+                <strong>Método: </strong>
+                {'Método de pago'}
               </p>
               {order.isPaid ? (
-                <MessageBox variant="success">Paid</MessageBox>
+                <MessageBox variant="success">Pagado</MessageBox>
               ) : (
-                <MessageBox variant="danger">Not paid</MessageBox>
+                <MessageBox variant="danger">No pagado</MessageBox>
               )}
               {loading && <LoadingBox></LoadingBox>}
             </div>
@@ -179,7 +179,7 @@ const Order = () => {
 
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Items</h3>
+              <h3 className="card-title">Productos</h3>
               <div className="list-group">
                 {order.orderItems.map((item) => (
                   <div className="list-group-item" key={item._id}>
@@ -202,7 +202,7 @@ const Order = () => {
           </div>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Items</h3>
+              <h3 className="card-title">Devoluciones</h3>
               <div className="list-group">
                 {order.returnItems.map((item) => (
                   <div className="list-group-item" key={item.slug}>
@@ -228,11 +228,11 @@ const Order = () => {
         <div className="sidebar">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Order Summary</h3>
+              <h3 className="card-title">Resumen del Pedido</h3>
               <div className="list-group">
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <div>Items</div>
+                    <div>Artículos</div>
                     <div>{order.orderItems.length}</div>
                   </div>
                 </div>
@@ -250,7 +250,7 @@ const Order = () => {
                 </div>
                 <div className="list-group-item">
                   <div className="summary-row">
-                    <strong>Order Total: </strong> <br />
+                    <strong>Total: </strong> <br />
                     <strong>${order.totalPrice.toFixed(2)}</strong>
                   </div>
                 </div>
@@ -263,7 +263,9 @@ const Order = () => {
                         onSubmit={estimatedDeliveryHandler}
                       >
                         <div className="inputDiv">
-                          <label htmlFor="date">Estimated delivery date</label>
+                          <label htmlFor="date">
+                            Fecha estimada de entrega
+                          </label>
                           <div className="input flex">
                             {/* <FaUserShield className="icon" /> */}
                             <input
@@ -278,8 +280,8 @@ const Order = () => {
                         </div>
 
                         <button type="submit" className="btn flex">
-                          <span>Continue</span>
-                          {/* <AiOutlineSwapRight className="icon" /> */}
+                          <span>Continuar</span>
+                          <AiOutlineSwapRight className="icon" />
                         </button>
                       </form>
                     </div>
@@ -294,7 +296,7 @@ const Order = () => {
                         onClick={orderReadyHandler}
                         className="btn flex"
                       >
-                        <span>Order Ready</span>
+                        <span>Pedido listo para enviar!</span>
                       </button>
                       {loading && <LoadingBox></LoadingBox>}
                     </div>
@@ -309,7 +311,7 @@ const Order = () => {
                         onClick={deliverOrderHandler}
                         className="btn flex"
                       >
-                        <span>Deliver Order</span>
+                        <span>Pedido entregado</span>
                       </button>
                       {loading && <LoadingBox></LoadingBox>}
                     </div>

@@ -43,7 +43,7 @@ const Listing = () => {
   return (
     <div className="lisitingSection">
       <div className="heading flex">
-        <h1>Products</h1>
+        <h1>Productos</h1>
         {/* <button className="btn flex">
           See All <BsArrowRightShort className="icon" />
         </button> */}

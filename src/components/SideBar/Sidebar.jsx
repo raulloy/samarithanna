@@ -54,7 +54,7 @@ const Sidebar = () => {
           <li className="listItem">
             <Link to="/orderhistory" className="menuLink flex">
               <MdDeliveryDining className="icon" />
-              <span className="smallText">My Orders</span>
+              <span className="smallText">Mis pedidos</span>
             </Link>
           </li>
 
@@ -62,7 +62,7 @@ const Sidebar = () => {
             <li className="listItem">
               <Link to="/admin/orders" className="menuLink flex">
                 <FaList className="icon" />
-                <span className="smallText">Orders</span>
+                <span className="smallText">Pedidos</span>
               </Link>
             </li>
           )}
@@ -71,7 +71,7 @@ const Sidebar = () => {
             <li className="listItem">
               <Link to="/admin/products" className="menuLink flex">
                 <FaStore className="icon" />
-                <span className="smallText">Products</span>
+                <span className="smallText">Productos</span>
               </Link>
             </li>
           )}
@@ -79,12 +79,12 @@ const Sidebar = () => {
       </div>
 
       <div className="settingsDiv">
-        <h3 className="divTitle">SETTINGS</h3>
+        <h3 className="divTitle">Configuración</h3>
         <ul className="menuLists grid">
           <li className="listItem">
             <Link to="/profile" className="menuLink flex">
               <AiOutlineUser className="icon" />
-              <span className="smallText">Profile</span>
+              <span className="smallText">Perfil</span>
             </Link>
           </li>
 
@@ -116,7 +116,7 @@ const Sidebar = () => {
               className="menuLink flex"
             >
               <BsFillArrowLeftCircleFill className="icon" />
-              <span className="smallText">Log Out</span>
+              <span className="smallText">Cerrar Sesión</span>
             </Link>
           </li>
         </ul>
@@ -128,10 +128,10 @@ const Sidebar = () => {
           <div className="circle1"></div>
           <div className="circle2"></div>
 
-          <h3>Help Center</h3>
-          <p>Having trouble with your order?, please contact us.</p>
+          <h3>¿Necesitas ayuda?</h3>
+          <p>¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.</p>
 
-          <button className="btn">Go to help center</button>
+          <button className="btn">Contactar</button>
         </div>
       </div>
     </div>

@@ -39,14 +39,16 @@ const Product = (props) => {
         <div className="img-container">
           <img src={product.image} alt={product.name} />
         </div>
-        <h3>{product.name}</h3>
+        <div className="product-name">
+          <h3>{product.name}</h3>
+        </div>
       </Link>
       <div className="buttons flex">
         <button className="cart-btn" onClick={addToCartHandler}>
-          Add to cart
+          Añadir
         </button>
         <button className="cart-btn" onClick={addReturnsHandler}>
-          Add to returns
+          Devolver
         </button>
       </div>
     </div>

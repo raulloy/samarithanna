@@ -47,10 +47,10 @@ const Activity = () => {
   return (
     <div className="activitySection">
       <div className="heading flex">
-        <h1>Recent Orders</h1>
+        <h1>Pedidos recientes</h1>
         <Link to="/orderhistory">
           <button className="btn flex">
-            See All
+            Ver todos
             <BsArrowRightShort className="icon" />
           </button>
         </Link>
@@ -70,16 +70,16 @@ const Activity = () => {
                   Total: ${order.totalPrice.toFixed(2)}
                 </span>
                 <small>
-                  Date: {formatDate(order.createdAt.substring(0, 10))} |
+                  Fecha: {formatDate(order.createdAt.substring(0, 10))}
                 </small>
-                <small> Products: {order.orderItems.length} | </small>
+                {/* <small> Productos: {order.orderItems.length} | </small>
                 <small>
-                  Items:{' '}
+                  Artículos:{' '}
                   {order.orderItems.reduce(
                     (acc, curr) => acc + curr.quantity,
                     0
                   )}
-                </small>
+                </small> */}
               </div>
               {/* <div className="duration">2 min ago</div> */}
             </div>

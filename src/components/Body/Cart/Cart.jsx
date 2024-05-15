@@ -44,28 +44,28 @@ const Cart = () => {
   return (
     <div className="mainContent">
       <Helmet>
-        <title>Shopping Cart</title>
+        <title>Pedido</title>
       </Helmet>
 
-      <h1>Shopping Cart</h1>
+      <h1>Tu pedido</h1>
       <div className="shopping-cart">
         {cartItems.length === 0 ? (
           <div></div>
         ) : (
           <div className="column-labels">
-            <label className="cart-product-image">Image</label>
-            <label className="cart-product-details">Product</label>
-            <label className="cart-product-price">Price</label>
+            <label className="cart-product-image">Imagen</label>
+            <label className="cart-product-details">Producto</label>
+            <label className="cart-product-price">Precio</label>
             <label className="cart-product-price">IEPS</label>
-            <label className="cart-product-details">Quantity</label>
-            <label className="product-removal">Remove</label>
+            <label className="cart-product-details">Cantidad</label>
+            <label className="product-removal">Quitar</label>
             <label className="product-line-price">Total</label>
           </div>
         )}
 
         {cartItems.length === 0 ? (
           <MessageBox>
-            Cart is empty. <Link to="/">Go Shopping</Link>
+            Ups! No has añadido productos. <Link to="/">Comprar</Link>
           </MessageBox>
         ) : (
           <>
@@ -110,7 +110,7 @@ const Cart = () => {
                 </div>
               </div>
             ))}
-            <h3 style={{ padding: 25 }}>Returns</h3>
+            <h3 style={{ padding: 25 }}>Devoluciones</h3>
             {returnItems.map((item) => (
               <div className="product" key={item.slug}>
                 <div className="cart-product-image">
@@ -197,7 +197,7 @@ const Cart = () => {
             onClick={checkoutHandler}
             disabled={cartItems.length === 0}
           >
-            Checkout
+            Confirmar
           </button>
         )}
       </div>

@@ -38,3 +38,10 @@
   background: var(--PrimaryColor);
   color: var(--paleGreen);
 }
+
+@media screen and (max-width: 918px) {
+  .cart-btn,
+  .transparent-btn {
+    font-size: 60%;
+  }
+}
