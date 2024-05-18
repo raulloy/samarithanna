@@ -39,8 +39,77 @@
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 7px 50px rgb(214, 223, 213);
+  overflow: scroll;
 }
 
 .chart-container h2 {
   margin: 1rem;
+}
+
+/* dailyUserTracking Table  */
+
+.dailyUserTracking {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.dailyUserTracking th,
+.dailyUserTracking td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.dailyUserTracking thead {
+  background-color: #f4f4f4;
+}
+
+.dailyUserTracking th {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.dailyUserTracking tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dailyUserTracking tr:hover {
+  background-color: #f1f1f1;
+}
+
+@media screen and (max-width: 768px) {
+  .dailyUserTracking,
+  .dailyUserTracking thead,
+  .dailyUserTracking tbody,
+  .dailyUserTracking th,
+  .dailyUserTracking td,
+  .dailyUserTracking tr {
+    display: block;
+  }
+
+  .dailyUserTracking tr {
+    margin-bottom: 15px;
+  }
+
+  .dailyUserTracking td {
+    padding-left: 50%;
+    text-align: right;
+    position: relative;
+  }
+
+  .dailyUserTracking td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .dailyUserTracking th {
+    display: none;
+  }
 }

@@ -75,11 +75,11 @@ const Profile = () => {
           <div className="container flex">
             <div className="formDiv flex">
               <div className="headerDiv">
-                <h2>Profile</h2>
+                <h2>Perfil</h2>
               </div>
               <form className="form grid" onSubmit={submitHandler}>
                 <div className="inputDiv">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name">Nombre</label>
                   <div className="input flex">
                     {/* <FaUserShield className="icon" /> */}
                     <input
@@ -87,7 +87,7 @@ const Profile = () => {
                       value={name}
                       required
                       id="name"
-                      placeholder="Enter your name"
+                      placeholder="Introduce tu nombre"
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
@@ -101,31 +101,31 @@ const Profile = () => {
                       value={email}
                       required
                       id="email"
-                      placeholder="Enter your email"
+                      placeholder="Introduce tu email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="inputDiv">
-                  <label htmlFor="city">Password</label>
+                  <label htmlFor="city">Contraseña</label>
                   <div className="input flex">
                     {/* <FaUserShield className="icon" /> */}
                     <input
                       type="password"
                       id="password"
-                      placeholder="Enter your password"
+                      placeholder="Introduce tu nueva contraseña"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="inputDiv">
-                  <label htmlFor="postalCode">Confirm Password</label>
+                  <label htmlFor="postalCode">Confirmar Contraseña</label>
                   <div className="input flex">
                     {/* <FaUserShield className="icon" /> */}
                     <input
                       type="password"
                       id="confirmPassword"
-                      placeholder="Confirm your Password"
+                      placeholder="Confirma tu nueva contraseña"
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>

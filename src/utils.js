@@ -92,7 +92,7 @@ export function formatDate(dateString) {
   const day = utcDate.getUTCDate().toString().padStart(2, '0');
   const month = (utcDate.getUTCMonth() + 1).toString().padStart(2, '0');
   const year = utcDate.getUTCFullYear();
-  return `${day}-${month}-${year}`;
+  return `${day}/${month}/${year}`;
 }
 
 export const chartOptions = {

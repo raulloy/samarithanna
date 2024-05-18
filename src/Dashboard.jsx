@@ -23,6 +23,8 @@ import DashboardScreen from './components/Body/DashboardScreen/DashboardScreen';
 import ProductList from './components/Body/ProductList/ProductList';
 import ProductEditing from './components/Body/ProductEditing/ProductEditing';
 import OrderList from './components/Body/OrderList/OrderList';
+import UserList from './components/Body/User List/UserList';
+import UserEditing from './components/Body/UserEditing/UserEditing';
 
 const Dashboard = () => {
   const { state } = useContext(Store);
@@ -101,6 +103,22 @@ const Dashboard = () => {
                   element={
                     <AdminRoute>
                       <OrderList />
+                    </AdminRoute>
+                  }
+                ></Route>
+                <Route
+                  path="/admin/users"
+                  element={
+                    <AdminRoute>
+                      <UserList />
+                    </AdminRoute>
+                  }
+                ></Route>
+                <Route
+                  path="/admin/user/:id"
+                  element={
+                    <AdminRoute>
+                      <UserEditing />
                     </AdminRoute>
                   }
                 ></Route>

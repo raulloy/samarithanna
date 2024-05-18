@@ -11,9 +11,7 @@ import { MdDeliveryDining } from 'react-icons/md';
 import { FaStore } from 'react-icons/fa';
 import { FaList } from 'react-icons/fa';
 import { AiOutlineUser } from 'react-icons/ai';
-// import { BiTrendingUp } from 'react-icons/bi';
-// import { MdOutlinePermContactCalendar } from 'react-icons/md';
-// import { BsCreditCard2Front } from 'react-icons/bs';
+import { FaUser } from 'react-icons/fa';
 import { BsQuestionCircle } from 'react-icons/bs';
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
@@ -72,6 +70,15 @@ const Sidebar = () => {
               <Link to="/admin/products" className="menuLink flex">
                 <FaStore className="icon" />
                 <span className="smallText">Productos</span>
+              </Link>
+            </li>
+          )}
+
+          {userInfo && userInfo.isAdmin && (
+            <li className="listItem">
+              <Link to="/admin/users" className="menuLink flex">
+                <FaUser className="icon" />
+                <span className="smallText">Usuarios</span>
               </Link>
             </li>
           )}

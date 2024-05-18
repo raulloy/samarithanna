@@ -41,9 +41,9 @@ const OrderHistory = () => {
     <div className="mainContent">
       <div>
         <Helmet>
-          <title>Order History</title>
+          <title>Mis Pedidos</title>
         </Helmet>
-        <h2>Order History</h2> <br />
+        <h2>Mis Pedidos</h2> <br />
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -53,12 +53,12 @@ const OrderHistory = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th>DELIVERED DATE</th>
-                <th>ACTIONS</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estatus de pago</th>
+                <th>Fecha estimada de entrega</th>
+                <th>Estatus de entrega</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -67,11 +67,15 @@ const OrderHistory = () => {
                   <td>{order._id.slice(-5)}</td>
                   <td>{formatDate(order.createdAt.substring(0, 10))}</td>
                   <td>{order.totalPrice.toFixed(2)}</td>
-                  <td>{order.isPaid ? 'Yes' : 'No'}</td>
-                  <td>{order.isDeliverated ? 'Yes' : 'No'}</td>
+                  <td>{order.isPaid ? formatDate(order.paidAt) : 'No'}</td>
                   <td>
                     {order.estimatedDelivery
                       ? formatDate(order.estimatedDelivery.substring(0, 10))
+                      : 'No'}
+                  </td>
+                  <td>
+                    {order.deliveredAt
+                      ? formatDate(order.deliveredAt.substring(0, 10))
                       : 'No'}
                   </td>
                   <td>

@@ -99,16 +99,16 @@ const ProductList = () => {
     <div className="mainContent">
       <div>
         <Helmet>
-          <title>Products</title>
+          <title>Productos</title>
         </Helmet>
         <div className="product-list-title">
-          <h2>Products</h2>
+          <h2>Productos</h2>
           <button
             type="button"
             className="transparent-btn"
             onClick={createHandler}
           >
-            Create Product
+            Crear Producto
           </button>
         </div>
         {loadingCreate && <LoadingBox></LoadingBox>}
@@ -121,11 +121,11 @@ const ProductList = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Product Qty</th>
-                  <th>Presentation</th>
-                  <th>Actions</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Contenido Neto</th>
+                  <th>Presentación</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -143,7 +143,7 @@ const ProductList = () => {
                           navigate(`/admin/product/${product._id}`);
                         }}
                       >
-                        Details
+                        Editar
                       </button>
                     </td>
                   </tr>

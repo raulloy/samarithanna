@@ -296,7 +296,7 @@ const Order = () => {
                         onClick={orderReadyHandler}
                         className="btn flex"
                       >
-                        <span>Pedido listo para enviar!</span>
+                        <span>Pedido listo para enviar</span>
                       </button>
                       {loading && <LoadingBox></LoadingBox>}
                     </div>

@@ -1,12 +1,15 @@
 import { useContext, useEffect, useReducer } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
-import { Store } from '../../../Store';
-import { apiURL, formatDate, getError } from '../../../utils';
+import './userlist.css';
+
 import LoadingBox from '../LoadingBox/LoadingBox';
 import MessageBox from '../MessageBox/MessageBox';
+
+import { Store } from '../../../Store';
+import { apiURL, getError } from '../../../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -15,30 +18,33 @@ const reducer = (state, action) => {
     case 'FETCH_SUCCESS':
       return {
         ...state,
-        orders: action.payload,
+        users: action.payload,
         loading: false,
       };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }
 };
 
-const OrderList = () => {
+const UserList = () => {
   const navigate = useNavigate();
-  const { state } = useContext(Store);
-  const { userInfo } = state;
-  const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+
+  const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
   });
+
+  const { state } = useContext(Store);
+  const { userInfo } = state;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`${apiURL}/api/orders`, {
+        const { data } = await axios.get(`${apiURL}/api/users`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -51,13 +57,12 @@ const OrderList = () => {
     };
     fetchData();
   }, [userInfo]);
-
   return (
     <div className="mainContent">
       <Helmet>
-        <title>Todos los Pedidos</title>
+        <title>Usuarios</title>
       </Helmet>
-      <h2>Todos los Pedidos</h2> <br />
+      <h1>Usuarios</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -67,42 +72,28 @@ const OrderList = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Usuario</th>
-              <th>Fecha</th>
-              <th>Total</th>
-              <th>Estatus de pago</th>
-              <th>Fecha estimada de entrega</th>
-              <th>Estatus de entrega</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Admin</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id.slice(-5)}</td>
-                <td>{order.shippingAddress.fullName}</td>
-                <td>{formatDate(order.createdAt.substring(0, 10))}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? formatDate(order.paidAt) : 'No'}</td>
-                <td>
-                  {order.estimatedDelivery
-                    ? formatDate(order.estimatedDelivery.substring(0, 10))
-                    : 'No'}
-                </td>
-                <td>
-                  {order.deliveredAt
-                    ? formatDate(order.deliveredAt.substring(0, 10))
-                    : 'No'}
-                </td>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user._id.slice(-5)}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.isAdmin ? 'Si' : 'No'}</td>
                 <td>
                   <button
                     type="button"
                     className="transparent-btn"
                     onClick={() => {
-                      navigate(`/order/${order._id}`);
+                      navigate(`/admin/user/${user._id}`);
                     }}
                   >
-                    Detalle
+                    Editar
                   </button>
                 </td>
               </tr>
@@ -114,4 +105,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default UserList;

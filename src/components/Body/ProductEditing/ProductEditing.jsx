@@ -148,9 +148,9 @@ const ProductEditing = () => {
     <div className="mainContent">
       <div>
         <Helmet>
-          <title>Edit Product{productId.slice(-5)}</title>
+          <title>Editar Producto {productId.slice(-5)}</title>
         </Helmet>
-        <h2>Edit Product {productId.slice(-5)}</h2>
+        <h2>Editar</h2>
 
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -161,12 +161,12 @@ const ProductEditing = () => {
             <div className="container flex">
               <div className="formDiv flex">
                 <div className="headerDiv">
-                  <h3>Edit product</h3>
+                  <h3>Producto {productId.slice(-5)}</h3>
                 </div>
 
                 <form className="form grid" onSubmit={submitHandler}>
                   <div className="inputDiv">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Nombre</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -188,7 +188,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="city">Product Quantity</label>
+                    <label htmlFor="city">Contenido Neto</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -199,7 +199,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="postalCode">Presentation</label>
+                    <label htmlFor="postalCode">Presentación</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -210,7 +210,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="postalCode">Price</label>
+                    <label htmlFor="postalCode">Precio</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -221,7 +221,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="postalCode">Image</label>
+                    <label htmlFor="postalCode">Imagen</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -232,7 +232,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="postalCode">Category</label>
+                    <label htmlFor="postalCode">Categoría</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -243,7 +243,7 @@ const ProductEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="postalCode">Description</label>
+                    <label htmlFor="postalCode">Descripción</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
                       <input
@@ -255,7 +255,7 @@ const ProductEditing = () => {
                   </div>
 
                   <button type="submit" className="btn flex">
-                    <span>Continue</span>
+                    <span>Continuar</span>
                     {/* <AiOutlineSwapRight className="icon" /> */}
                   </button>
                   {loadingUpdate && <LoadingBox></LoadingBox>}
@@ -265,7 +265,7 @@ const ProductEditing = () => {
                     className="btn flex"
                     style={{ background: 'red' }}
                   >
-                    <span>Delete</span>
+                    <span>Eliminar</span>
                     {/* <AiOutlineSwapRight className="icon" /> */}
                   </button>
                   {loadingDelete && <LoadingBox></LoadingBox>}
