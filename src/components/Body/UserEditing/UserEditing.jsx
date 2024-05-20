@@ -44,6 +44,8 @@ const UserEditing = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [daysFrequency, setDaysFrequency] = useState(7);
+  const [minOrders, setMinOrders] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +57,8 @@ const UserEditing = () => {
         setName(data.name);
         setEmail(data.email);
         setIsAdmin(data.isAdmin);
+        setDaysFrequency(data.daysFrequency || 7);
+        setMinOrders(data.minOrders || 1);
         dispatch({ type: 'FETCH_SUCCESS' });
       } catch (err) {
         dispatch({
@@ -72,7 +76,14 @@ const UserEditing = () => {
       dispatch({ type: 'UPDATE_REQUEST' });
       await axios.put(
         `${apiURL}/api/users/${userId}`,
-        { _id: userId, name, email, isAdmin },
+        {
+          _id: userId,
+          name,
+          email,
+          isAdmin,
+          daysFrequency, // Add this field
+          minOrders, // Add this field
+        },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -141,6 +152,32 @@ const UserEditing = () => {
                         id="isAdmin"
                         checked={isAdmin}
                         onChange={(e) => setIsAdmin(e.target.checked)}
+                      />
+                    </div>
+                  </div>
+                  <div className="inputDiv">
+                    <label htmlFor="daysFrequency">Frecuencia de compra</label>
+                    <div className="input flex">
+                      <select
+                        id="daysFrequency"
+                        value={daysFrequency}
+                        onChange={(e) => setDaysFrequency(e.target.value)}
+                      >
+                        <option value={7}>7</option>
+                        <option value={14}>14</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="inputDiv">
+                    <label htmlFor="minOrders">Mínimo de pedidos</label>
+                    <div className="input flex">
+                      <input
+                        type="number"
+                        id="minOrders"
+                        value={minOrders}
+                        min={1}
+                        onChange={(e) => setMinOrders(e.target.value)}
                       />
                     </div>
                   </div>

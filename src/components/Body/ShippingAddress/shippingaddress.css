@@ -40,7 +40,8 @@
 .shippingAddress .container .formDiv .form .inputDiv .icon {
   color: var(--greyText);
 }
-.shippingAddress .container .formDiv .form .inputDiv input {
+.shippingAddress .container .formDiv .form .inputDiv input,
+.shippingAddress .container .formDiv .form .inputDiv select {
   background: none;
   outline: none;
   border: none;

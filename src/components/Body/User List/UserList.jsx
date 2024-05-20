@@ -75,6 +75,8 @@ const UserList = () => {
               <th>Nombre</th>
               <th>Email</th>
               <th>Admin</th>
+              <th>Frecuencia de compra</th>
+              <th>Mínimo de pedidos</th>
               <th></th>
             </tr>
           </thead>
@@ -85,6 +87,8 @@ const UserList = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.isAdmin ? 'Si' : 'No'}</td>
+                <td style={{ textAlign: 'center' }}>{user.daysFrequency}</td>
+                <td style={{ textAlign: 'center' }}>{user.minOrders}</td>
                 <td>
                   <button
                     type="button"

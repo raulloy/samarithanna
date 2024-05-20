@@ -19,6 +19,8 @@ const reducer = (state, action) => {
         summary: action.payload,
         loading: false,
       };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
     case 'FETCH_TRACKING_REQUEST':
       return { ...state, trackingLoading: true };
     case 'FETCH_TRACKING_SUCCESS':
@@ -27,9 +29,21 @@ const reducer = (state, action) => {
         dailyUserTracking: action.payload || [],
         trackingLoading: false,
       };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
     case 'FETCH_TRACKING_FAIL':
+      return {
+        ...state,
+        trackingLoading: false,
+        trackingError: action.payload,
+      };
+    case 'FETCH_TRACKING_REQUEST_2':
+      return { ...state, trackingLoading: true };
+    case 'FETCH_TRACKING_SUCCESS_2':
+      return {
+        ...state,
+        dailyUserTracking_2: action.payload || [],
+        trackingLoading: false,
+      };
+    case 'FETCH_TRACKING_FAIL_2':
       return {
         ...state,
         trackingLoading: false,
@@ -48,6 +62,7 @@ const DashboardScreen = () => {
       error,
       trackingLoading,
       dailyUserTracking,
+      dailyUserTracking_2,
       trackingError,
     },
     dispatch,
@@ -57,6 +72,7 @@ const DashboardScreen = () => {
     error: '',
     trackingError: '',
     dailyUserTracking: [], // Inicializa dailyUserTracking como un array vacío
+    dailyUserTracking_2: [], // Inicializa dailyUserTracking como un array vacío
   });
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -94,11 +110,31 @@ const DashboardScreen = () => {
       }
     };
 
+    const fetchDailyUserTracking_2 = async () => {
+      try {
+        const { data } = await axios.get(
+          `${apiURL}/api/orders/users-daily-tracking-2`,
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        console.log('Fetched daily user tracking:', data);
+        dispatch({ type: 'FETCH_TRACKING_SUCCESS_2', payload: data });
+      } catch (err) {
+        dispatch({
+          type: 'FETCH_TRACKING_FAIL_2',
+          payload: getError(err),
+        });
+      }
+    };
+
     fetchData();
     fetchDailyUserTracking();
+    fetchDailyUserTracking_2();
   }, [userInfo]);
 
-  console.log(dailyUserTracking);
+  console.log('dailyUserTracking', dailyUserTracking);
+  console.log('dailyUserTracking_2', dailyUserTracking_2);
 
   return (
     <div className="mainContent">
@@ -151,7 +187,7 @@ const DashboardScreen = () => {
             </div>
           </div>
           <div className="chart-container">
-            <h2>Seguimiento semanal de pedidos de usuarios</h2>
+            <h2>Seguimiento semanal de pedidos por usuario</h2>
             {trackingLoading ? (
               <div>Loading...</div>
             ) : trackingError ? (
@@ -172,7 +208,16 @@ const DashboardScreen = () => {
                 </thead>
                 <tbody>
                   {dailyUserTracking.map((user, index) => (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      style={{
+                        background:
+                          user.totalOrders >= user.minOrders
+                            ? // ? '#e5c6ce'
+                              '#CBFFA5'
+                            : 'white',
+                      }}
+                    >
                       <td>{user.userName}</td>
                       <td>{user.orders.Monday}</td>
                       <td>{user.orders.Tuesday}</td>
@@ -181,6 +226,71 @@ const DashboardScreen = () => {
                       <td>{user.orders.Friday}</td>
                       <td>{user.orders.Saturday}</td>
                       <td>{user.orders.Sunday}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+          <div className="chart-container">
+            <h2>Seguimiento quincenal de pedidos por usuario</h2>
+            {trackingLoading ? (
+              <div>Loading...</div>
+            ) : trackingError ? (
+              <div>{trackingError}</div>
+            ) : (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th rowSpan="2">Usuario</th>
+                    <th colSpan="7">Semana Pasada</th>
+                    <th colSpan="7">Semana Actual</th>
+                  </tr>
+                  <tr>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                    <th>Domingo</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                    <th>Domingo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dailyUserTracking_2.map((user, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        background:
+                          user.lastWeek.totalOrders +
+                            user.currentWeek.totalOrders >=
+                          user.minOrders
+                            ? '#CBFFA5'
+                            : 'white',
+                      }}
+                    >
+                      <td>{user.userName}</td>
+                      <td>{user.lastWeek.orders.Monday}</td>
+                      <td>{user.lastWeek.orders.Tuesday}</td>
+                      <td>{user.lastWeek.orders.Wednesday}</td>
+                      <td>{user.lastWeek.orders.Thursday}</td>
+                      <td>{user.lastWeek.orders.Friday}</td>
+                      <td>{user.lastWeek.orders.Saturday}</td>
+                      <td>{user.lastWeek.orders.Sunday}</td>
+                      <td>{user.currentWeek.orders.Monday}</td>
+                      <td>{user.currentWeek.orders.Tuesday}</td>
+                      <td>{user.currentWeek.orders.Wednesday}</td>
+                      <td>{user.currentWeek.orders.Thursday}</td>
+                      <td>{user.currentWeek.orders.Friday}</td>
+                      <td>{user.currentWeek.orders.Saturday}</td>
+                      <td>{user.currentWeek.orders.Sunday}</td>
                     </tr>
                   ))}
                 </tbody>

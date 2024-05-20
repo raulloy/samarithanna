@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Store } from '../../../Store';
 import '../Buttons/buttons.css';
+
+import { Store } from '../../../Store';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 
 const Product = (props) => {
   const { product } = props;
+
+  const [quantity, setQuantity] = useState(1);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
@@ -12,9 +16,6 @@ const Product = (props) => {
   } = state;
 
   const addToCartHandler = () => {
-    const existItem = cartItems.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-
     ctxDispatch({
       type: 'CART_ADD_ITEM',
       payload: { ...product, quantity },
@@ -22,15 +23,22 @@ const Product = (props) => {
   };
 
   const addReturnsHandler = async () => {
-    const existItem = state.returns.returnItems.find(
-      (x) => x._id === product._id
-    );
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-
     ctxDispatch({
       type: 'RETURNS_ADD_ITEM',
-      payload: { ...product, quantity: quantity },
+      payload: { ...product, quantity },
     });
+  };
+
+  const increaseQuantity = () => {
+    if (quantity < 100) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   return (
@@ -43,13 +51,32 @@ const Product = (props) => {
           <h3>{product.name}</h3>
         </div>
       </Link>
-      <div className="buttons flex">
-        <button className="cart-btn" onClick={addToCartHandler}>
-          Añadir
-        </button>
-        <button className="cart-btn" onClick={addReturnsHandler}>
-          Devolver
-        </button>
+      <div className="cart-buttons">
+        <div className="buttons flex" style={{ marginTop: 10 }}>
+          <button
+            className="qty-btn"
+            onClick={decreaseQuantity}
+            disabled={quantity === 1}
+          >
+            <FaMinus />
+          </button>{' '}
+          <span>{quantity}</span>{' '}
+          <button
+            className="qty-btn"
+            onClick={increaseQuantity}
+            disabled={quantity === 100}
+          >
+            <FaPlus />
+          </button>
+        </div>
+        <div className="buttons flex" style={{ marginTop: 10 }}>
+          <button className="cart-btn" onClick={addToCartHandler}>
+            Añadir
+          </button>
+          <button className="cart-btn" onClick={addReturnsHandler}>
+            Cambiar
+          </button>
+        </div>
       </div>
     </div>
   );
