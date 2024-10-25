@@ -40,7 +40,7 @@ const Sidebar = () => {
       <div className="menuDiv">
         <h3 className="divTitle">MENU</h3>
         <ul className="menuLists grid">
-          {userInfo && userInfo.isAdmin && (
+          {userInfo && userInfo.userType === 'admin' && (
             <li className="listItem">
               <Link to="/admin/dashboard" className="menuLink flex">
                 <IoMdSpeedometer className="icon" />
@@ -56,16 +56,18 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          {userInfo && userInfo.isAdmin && (
-            <li className="listItem">
-              <Link to="/admin/orders" className="menuLink flex">
-                <FaList className="icon" />
-                <span className="smallText">Pedidos</span>
-              </Link>
-            </li>
-          )}
+          {userInfo &&
+            (userInfo.userType === 'admin' ||
+              userInfo.userType === 'delivery') && (
+              <li className="listItem">
+                <Link to="/admin/orders" className="menuLink flex">
+                  <FaList className="icon" />
+                  <span className="smallText">Pedidos</span>
+                </Link>
+              </li>
+            )}
 
-          {userInfo && userInfo.isAdmin && (
+          {userInfo && userInfo.userType === 'admin' && (
             <li className="listItem">
               <Link to="/admin/products" className="menuLink flex">
                 <FaStore className="icon" />
@@ -74,7 +76,7 @@ const Sidebar = () => {
             </li>
           )}
 
-          {userInfo && userInfo.isAdmin && (
+          {userInfo && userInfo.userType === 'admin' && (
             <li className="listItem">
               <Link to="/admin/users" className="menuLink flex">
                 <FaUser className="icon" />

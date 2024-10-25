@@ -161,7 +161,7 @@ const Order = () => {
             </div>
           </div>
 
-          <div className="card">
+          {/* <div className="card">
             <div className="card-body">
               <h3 className="card-title">Pago</h3>
               <p className="card-text">
@@ -175,7 +175,7 @@ const Order = () => {
               )}
               {loading && <LoadingBox></LoadingBox>}
             </div>
-          </div>
+          </div> */}
 
           <div className="card">
             <div className="card-body">
@@ -202,7 +202,7 @@ const Order = () => {
           </div>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Devoluciones</h3>
+              <h3 className="card-title">Cambios</h3>
               <div className="list-group">
                 {order.returnItems.map((item) => (
                   <div className="list-group-item" key={item.slug}>
@@ -255,68 +255,76 @@ const Order = () => {
                   </div>
                 </div>
 
-                {userInfo.isAdmin && !order.estimatedDelivery && (
-                  <div className="list-group-item">
-                    <div className="d-grid">
-                      <form
-                        className="form grid"
-                        onSubmit={estimatedDeliveryHandler}
-                      >
-                        <div className="inputDiv">
-                          <label htmlFor="date">
-                            Fecha estimada de entrega
-                          </label>
-                          <div className="input flex">
-                            {/* <FaUserShield className="icon" /> */}
-                            <input
-                              type="date"
-                              value={date}
-                              className="datePicker"
-                              required
-                              id="date"
-                              onChange={(e) => setDate(e.target.value)}
-                            />
+                {(userInfo.userType === 'admin' ||
+                  userInfo.userType === 'delivery') &&
+                  !order.estimatedDelivery && (
+                    <div className="list-group-item">
+                      <div className="d-grid">
+                        <form
+                          className="form grid"
+                          onSubmit={estimatedDeliveryHandler}
+                        >
+                          <div className="inputDiv">
+                            <label htmlFor="date">
+                              Fecha estimada de entrega
+                            </label>
+                            <div className="input flex">
+                              {/* <FaUserShield className="icon" /> */}
+                              <input
+                                type="date"
+                                value={date}
+                                className="datePicker"
+                                required
+                                id="date"
+                                onChange={(e) => setDate(e.target.value)}
+                              />
+                            </div>
                           </div>
-                        </div>
 
-                        <button type="submit" className="btn flex">
-                          <span>Continuar</span>
-                          <AiOutlineSwapRight className="icon" />
+                          <button type="submit" className="btn flex">
+                            <span>Continuar</span>
+                            <AiOutlineSwapRight className="icon" />
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  )}
+
+                {(userInfo.userType === 'admin' ||
+                  userInfo.userType === 'delivery') &&
+                  !order.isReady &&
+                  order.estimatedDelivery && (
+                    <div className="list-group-item">
+                      <div className="d-grid">
+                        <button
+                          type="button"
+                          onClick={orderReadyHandler}
+                          className="btn flex"
+                        >
+                          <span>Pedido listo para enviar</span>
                         </button>
-                      </form>
+                        {loading && <LoadingBox></LoadingBox>}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {userInfo.isAdmin && !order.isReady && (
-                  <div className="list-group-item">
-                    <div className="d-grid">
-                      <button
-                        type="button"
-                        onClick={orderReadyHandler}
-                        className="btn flex"
-                      >
-                        <span>Pedido listo para enviar</span>
-                      </button>
-                      {loading && <LoadingBox></LoadingBox>}
+                {(userInfo.userType === 'admin' ||
+                  userInfo.userType === 'delivery') &&
+                  !order.isDelivered &&
+                  order.isReady && (
+                    <div className="list-group-item">
+                      <div className="d-grid">
+                        <button
+                          type="button"
+                          onClick={deliverOrderHandler}
+                          className="btn flex"
+                        >
+                          <span>Pedido entregado</span>
+                        </button>
+                        {loading && <LoadingBox></LoadingBox>}
+                      </div>
                     </div>
-                  </div>
-                )}
-
-                {userInfo.isAdmin && !order.isDelivered && (
-                  <div className="list-group-item">
-                    <div className="d-grid">
-                      <button
-                        type="button"
-                        onClick={deliverOrderHandler}
-                        className="btn flex"
-                      >
-                        <span>Pedido entregado</span>
-                      </button>
-                      {loading && <LoadingBox></LoadingBox>}
-                    </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
           </div>

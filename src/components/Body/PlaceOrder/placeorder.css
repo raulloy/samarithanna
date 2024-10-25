@@ -138,4 +138,33 @@
   .order-container .sidebar {
     padding: 0.8rem 0;
   }
+  .order-container .list-group-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .order-container .item-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .order-container .item-image {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .order-container .item-quantity,
+  .order-container a {
+    display: block;
+    text-align: center;
+  }
+
+  .order-container .item-quantity {
+    margin: 0.5rem 0;
+  }
 }

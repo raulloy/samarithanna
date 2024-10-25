@@ -8,6 +8,8 @@ import { Store } from '../../../Store';
 import { apiURL, getError } from '../../../utils';
 import LoadingBox from '../LoadingBox/LoadingBox';
 import MessageBox from '../MessageBox/MessageBox';
+import { AiOutlineSwapRight } from 'react-icons/ai';
+import './UserEditing.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -43,7 +45,8 @@ const UserEditing = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [userType, setUserType] = useState('user'); // Default to 'user'
+  const [isAdmitted, setIsAdmitted] = useState(false);
   const [daysFrequency, setDaysFrequency] = useState(7);
   const [minOrders, setMinOrders] = useState(1);
 
@@ -56,7 +59,8 @@ const UserEditing = () => {
         });
         setName(data.name);
         setEmail(data.email);
-        setIsAdmin(data.isAdmin);
+        setUserType(data.userType || 'user');
+        setIsAdmitted(data.isAdmitted || false);
         setDaysFrequency(data.daysFrequency || 7);
         setMinOrders(data.minOrders || 1);
         dispatch({ type: 'FETCH_SUCCESS' });
@@ -80,9 +84,10 @@ const UserEditing = () => {
           _id: userId,
           name,
           email,
-          isAdmin,
-          daysFrequency, // Add this field
-          minOrders, // Add this field
+          userType,
+          isAdmitted,
+          daysFrequency,
+          minOrders,
         },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -105,7 +110,7 @@ const UserEditing = () => {
         <Helmet>
           <title>Editar Usuario</title>
         </Helmet>
-        <h2>Editar Usuario {userId.slice(-5)}</h2>
+        {/* <h2>Editar Usuario {userId.slice(-5)}</h2> */}
 
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -121,9 +126,8 @@ const UserEditing = () => {
 
                 <form className="form grid" onSubmit={submitHandler}>
                   <div className="inputDiv">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Nombre</label>
                     <div className="input flex">
-                      {/* <FaUserShield className="icon" /> */}
                       <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -134,7 +138,6 @@ const UserEditing = () => {
                   <div className="inputDiv">
                     <label htmlFor="email">Email</label>
                     <div className="input flex">
-                      {/* <MdLocationOn className="icon" /> */}
                       <input
                         value={email}
                         type="email"
@@ -144,14 +147,28 @@ const UserEditing = () => {
                     </div>
                   </div>
                   <div className="inputDiv">
-                    <label htmlFor="isAdmin">Admin</label>
+                    <label htmlFor="userType">Tipo de usuario</label>
                     <div className="input flex">
-                      {/* <FaUserShield className="icon" /> */}
+                      <select
+                        id="userType"
+                        value={userType}
+                        onChange={(e) => setUserType(e.target.value)}
+                        required
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="delivery">Delivery</option>
+                        <option value="user">User</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="inputDiv">
+                    <label htmlFor="isAdmitted">Admitido</label>
+                    <div className="input flex">
                       <input
                         type="checkbox"
-                        id="isAdmin"
-                        checked={isAdmin}
-                        onChange={(e) => setIsAdmin(e.target.checked)}
+                        id="isAdmitted"
+                        checked={isAdmitted}
+                        onChange={(e) => setIsAdmitted(e.target.checked)}
                       />
                     </div>
                   </div>
@@ -184,7 +201,7 @@ const UserEditing = () => {
 
                   <button type="submit" className="btn flex">
                     <span>Continue</span>
-                    {/* <AiOutlineSwapRight className="icon" /> */}
+                    <AiOutlineSwapRight className="icon" />
                   </button>
                   {loadingUpdate && <LoadingBox></LoadingBox>}
                 </form>

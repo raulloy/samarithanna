@@ -70,7 +70,7 @@ const OrderList = () => {
               <th>Usuario</th>
               <th>Fecha</th>
               <th>Total</th>
-              <th>Estatus de pago</th>
+              {/* <th>Estatus de pago</th> */}
               <th>Fecha estimada de entrega</th>
               <th>Estatus de entrega</th>
               <th></th>
@@ -81,9 +81,9 @@ const OrderList = () => {
               <tr key={order._id}>
                 <td>{order._id.slice(-5)}</td>
                 <td>{order.shippingAddress.fullName}</td>
-                <td>{formatDate(order.createdAt.substring(0, 10))}</td>
+                <td>{formatDate(order.createdAt)}</td>
                 <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? formatDate(order.paidAt) : 'No'}</td>
+                {/* <td>{order.isPaid ? formatDate(order.paidAt) : 'No'}</td> */}
                 <td>
                   {order.estimatedDelivery
                     ? formatDate(order.estimatedDelivery.substring(0, 10))

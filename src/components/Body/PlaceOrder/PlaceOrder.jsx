@@ -113,13 +113,8 @@ const PlaceOrder = () => {
                           alt={item.name}
                           className="item-image"
                         />
+                        <div className="item-quantity">{item.quantity}</div>
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
-                      </div>
-                      <div className="item-quantity">{item.quantity}</div>
-                      {/* <div className="item-price">${item.price}</div>
-                      <div className="item-price">${item.ieps}</div> */}
-                      <div className="item-price">
-                        ${round2(item.quantity * (item.price + item.ieps))}
                       </div>
                     </div>
                   </div>
@@ -130,7 +125,7 @@ const PlaceOrder = () => {
           </div>
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title">Devoluciones</h3>
+              <h3 className="card-title">Cambios</h3>
               <div className="list-group">
                 {returnItems.map((item) => (
                   <div className="list-group-item" key={item._id}>
@@ -141,14 +136,9 @@ const PlaceOrder = () => {
                           alt={item.name}
                           className="item-image"
                         />
+                        <div className="item-quantity">{item.quantity}</div>
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
-                      <div className="item-quantity">{item.quantity}</div>
-                      {/* <div className="item-price">${item.price}</div>
-                      <div className="item-price">${item.ieps}</div> */}
-                      {/* <div className="item-price">
-                        ${round2(item.quantity * (item.price + item.ieps))}
-                      </div> */}
                     </div>
                   </div>
                 ))}
@@ -212,3 +202,17 @@ const PlaceOrder = () => {
 };
 
 export default PlaceOrder;
+
+{
+  /* <div className="item-quantity">{item.quantity}</div> */
+}
+
+{
+  /* <div className="item-price">${item.price}</div>
+                      <div className="item-price">${item.ieps}</div> */
+}
+{
+  /* <div className="item-price">
+                        ${round2(item.quantity * (item.price + item.ieps))}
+                      </div> */
+}

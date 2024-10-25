@@ -86,7 +86,7 @@ const UserList = () => {
                 <td>{user._id.slice(-5)}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin ? 'Si' : 'No'}</td>
+                <td>{user.userType}</td>
                 <td style={{ textAlign: 'center' }}>{user.daysFrequency}</td>
                 <td style={{ textAlign: 'center' }}>{user.minOrders}</td>
                 <td>

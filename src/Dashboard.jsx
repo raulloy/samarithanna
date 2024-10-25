@@ -19,6 +19,7 @@ import Profile from './components/Body/Profile/Profile';
 import Search from './components/Body/Search/Search';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
+import AdminDeliveryRoute from './components/AdminDeliveryRoute';
 import DashboardScreen from './components/Body/DashboardScreen/DashboardScreen';
 import ProductList from './components/Body/ProductList/ProductList';
 import ProductEditing from './components/Body/ProductEditing/ProductEditing';
@@ -101,9 +102,9 @@ const Dashboard = () => {
                 <Route
                   path="/admin/orders"
                   element={
-                    <AdminRoute>
+                    <AdminDeliveryRoute>
                       <OrderList />
-                    </AdminRoute>
+                    </AdminDeliveryRoute>
                   }
                 ></Route>
                 <Route

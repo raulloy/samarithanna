@@ -34,6 +34,12 @@ const Login = () => {
         email,
         password,
       });
+
+      if (!data.isAdmitted) {
+        toast.error('Your account is not admitted. Please contact support.');
+        return;
+      }
+
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
