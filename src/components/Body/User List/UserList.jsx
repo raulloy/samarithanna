@@ -2,8 +2,8 @@ import { useContext, useEffect, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
-
-import './userlist.css';
+import Box from '@mui/material/Box';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 import LoadingBox from '../LoadingBox/LoadingBox';
 import MessageBox from '../MessageBox/MessageBox';
@@ -23,7 +23,6 @@ const reducer = (state, action) => {
       };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-
     default:
       return state;
   }
@@ -32,9 +31,10 @@ const reducer = (state, action) => {
 const UserList = () => {
   const navigate = useNavigate();
 
-  const [{ loading, error, users }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, users = [] }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
+    users: [],
   });
 
   const { state } = useContext(Store);
@@ -57,6 +57,60 @@ const UserList = () => {
     };
     fetchData();
   }, [userInfo]);
+
+  const columns = [
+    // { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'id', headerName: 'Nombre', width: 150 },
+    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'userType', headerName: 'Tipo de usuario', width: 150 },
+    {
+      field: 'daysFrequency',
+      headerName: 'Frecuencia de compra',
+      width: 180,
+      type: 'number',
+      align: 'center',
+    },
+    {
+      field: 'minOrders',
+      headerName: 'No. mínimo de pedidos',
+      width: 200,
+      type: 'number',
+      align: 'center',
+    },
+    {
+      field: 'isAdmitted',
+      headerName: 'Admitido',
+      width: 200,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'edit',
+      headerName: '',
+      width: 150,
+      sortable: false,
+      renderCell: (params) => (
+        <button
+          type="button"
+          className="transparent-btn"
+          onClick={() => navigate(`/admin/user/${params.row.id}`)}
+        >
+          Editar
+        </button>
+      ),
+    },
+  ];
+
+  const rows = users.map((user) => ({
+    // id: user._id,
+    id: user.name,
+    email: user.email,
+    userType: user.userType,
+    daysFrequency: user.daysFrequency,
+    minOrders: user.minOrders,
+    isAdmitted: user.isAdmitted ? '✅' : '❌',
+  }));
+
   return (
     <div className="mainContent">
       <Helmet>
@@ -64,46 +118,35 @@ const UserList = () => {
       </Helmet>
       <h1>Usuarios</h1>
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <LoadingBox />
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Admin</th>
-              <th>Frecuencia de compra</th>
-              <th>Mínimo de pedidos</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id.slice(-5)}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.userType}</td>
-                <td style={{ textAlign: 'center' }}>{user.daysFrequency}</td>
-                <td style={{ textAlign: 'center' }}>{user.minOrders}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="transparent-btn"
-                    onClick={() => {
-                      navigate(`/admin/user/${user._id}`);
-                    }}
-                  >
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Box sx={{ height: '90%', width: '100%', background: 'white' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSizeOptions={[10, 25, 100]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar }}
+            sx={{
+              '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
+                color: 'green', // Toolbar button text color
+              },
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 'bold', // Bold header text
+              },
+            }}
+          />
+        </Box>
       )}
     </div>
   );

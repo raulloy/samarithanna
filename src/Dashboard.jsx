@@ -49,7 +49,14 @@ const Dashboard = () => {
                 <Route path="/product/:slug" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/shipping" element={<ShippingAddress />} />
-                <Route path="/place-order" element={<PlaceOrder />} />
+                <Route
+                  path="/place-order"
+                  element={
+                    <ProtectedRoute>
+                      <PlaceOrder />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/order/:id"
                   element={

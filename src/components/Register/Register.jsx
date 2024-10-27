@@ -60,7 +60,7 @@ const Register = () => {
   return (
     <div className="registerPage flex">
       <div className="container flex">
-        <div className="videoDiv">
+        <div className="videoDiv" style={{ height: '100vh' }}>
           <video src={video} autoPlay muted loop></video>
 
           <div className="textDiv">
@@ -69,29 +69,29 @@ const Register = () => {
           </div>
 
           <div className="footerDiv flex">
-            <span className="text">Have an account?</span>
+            <span className="text">¿Ya tienes una cuenta?</span>
             <Link to={'/signin'}>
-              <button className="btn">Login</button>
+              <button className="btn">Iniciar Sesión</button>
             </Link>
           </div>
         </div>
 
         <div className="formDiv flex">
-          <div className="headerDiv">
+          <div className="headerDiv" style={{ marginTop: 20 }}>
             <img src={logo} alt="Logo Image" />
-            <h3>Let Us Know You!</h3>
+            <h3>¡Regístrate!</h3>
           </div>
 
           <form action="" className="form grid">
             <div className="inputDiv">
-              <label htmlFor="name">Username</label>
+              <label htmlFor="name">Nombre</label>
               <div className="input flex">
                 <FaUserShield className="icon" />
                 <input
                   type="text"
                   value={name}
                   id="name"
-                  placeholder="Enter Username"
+                  placeholder="Introduce tu nombre"
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -105,48 +105,49 @@ const Register = () => {
                   type="email"
                   value={email}
                   id="email"
-                  placeholder="Enter Email"
+                  placeholder="Introduce tu email"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="inputDiv">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Contraseña</label>
               <div className="input flex">
                 <BsFillShieldLockFill className="icon" />
                 <input
                   type="password"
                   value={password}
                   id="password"
-                  placeholder="Enter Password"
+                  placeholder="Introduce tu contraseña"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="inputDiv">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirmPassword">Confirma la contraseña</label>
               <div className="input flex">
                 <BsFillShieldLockFill className="icon" />
                 <input
                   type="password"
                   value={confirmPassword}
                   id="confirmPassword"
-                  placeholder="Enter Password Again"
+                  placeholder="Confirma la contraseña"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
             </div>
 
-            <button type="submit" className="btn flex" onClick={submitHandler}>
-              <span>Register</span>
+            <button
+              type="submit"
+              className="btn flex"
+              onClick={submitHandler}
+              style={{ marginTop: 20 }}
+            >
+              <span>Registrarse</span>
               <AiOutlineSwapRight className="icon" />
             </button>
-
-            <span className="forgotPassword">
-              Forgot your password? <a href="">Click Here</a>
-            </span>
           </form>
         </div>
       </div>

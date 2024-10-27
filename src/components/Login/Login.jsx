@@ -66,9 +66,9 @@ const Login = () => {
           </div>
 
           <div className="footerDiv flex">
-            <span className="text">Don't have an account?</span>
+            <span className="text">¿Aún no te has registrado?</span>
             <Link to={`/signup?redirect=${redirect}`}>
-              <button className="btn">Sign Up</button>
+              <button className="btn">Registrarse</button>
             </Link>
           </div>
         </div>
@@ -76,7 +76,7 @@ const Login = () => {
         <div className="formDiv flex">
           <div className="headerDiv">
             <img src={logo} alt="Logo Image" />
-            <h3>Welcome Back!</h3>
+            <h3>¡Bienvenido de nuevo!</h3>
           </div>
 
           <form className="form grid" onSubmit={submitHandler}>
@@ -90,33 +90,33 @@ const Login = () => {
                   type="email"
                   required
                   id="username"
-                  placeholder="Enter Email"
+                  placeholder="user@email.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="inputDiv">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Contraseña</label>
               <div className="input flex">
                 <BsFillShieldLockFill className="icon" />
                 <input
                   type="password"
                   required
                   id="password"
-                  placeholder="Enter Password"
+                  placeholder="********"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
 
             <button type="submit" className="btn flex">
-              <span>Login</span>
+              <span>Iniciar Sesión</span>
               <AiOutlineSwapRight className="icon" />
             </button>
 
             <span className="forgotPassword">
-              Forgot your password? <a href="">Click Here</a>
+              ¿Olvidaste tu contraseña? <a href="">Da clic aquí</a>
             </span>
           </form>
         </div>

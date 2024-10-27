@@ -1,4 +1,5 @@
 export const apiURL = 'https://samarithanna-api.onrender.com';
+// export const apiURL = 'http://localhost:5000';
 
 export const productsReducer = (state, action) => {
   switch (action.type) {

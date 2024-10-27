@@ -2,6 +2,8 @@ import { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Box from '@mui/material/Box';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 import { Store } from '../../../Store';
 import { apiURL, formatDate, getError } from '../../../utils';
@@ -29,9 +31,10 @@ const OrderList = () => {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, orders = [] }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
+    orders: [],
   });
 
   useEffect(() => {
@@ -52,6 +55,53 @@ const OrderList = () => {
     fetchData();
   }, [userInfo]);
 
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'user', headerName: 'Usuario', width: 150 },
+    { field: 'date', headerName: 'Fecha', width: 150 },
+    {
+      field: 'total',
+      headerName: 'Total',
+      width: 120,
+      type: 'number',
+      headerAlign: 'center',
+    },
+    {
+      field: 'estimatedDelivery',
+      headerName: 'Fecha estimada de entrega',
+      width: 240,
+    },
+    { field: 'deliveryStatus', headerName: 'Entregado', width: 180 },
+    {
+      field: 'details',
+      headerName: '',
+      width: 150,
+      sortable: false,
+      renderCell: (params) => (
+        <button
+          type="button"
+          className="transparent-btn"
+          onClick={() => navigate(`/order/${params.row.id}`)}
+        >
+          Detalle
+        </button>
+      ),
+    },
+  ];
+
+  const rows = orders.map((order) => ({
+    id: order._id,
+    user: order.shippingAddress.fullName,
+    date: order.createdAt ? order.createdAt.substring(0, 10) : '1970-01-01',
+    total: order.totalPrice.toFixed(2),
+    estimatedDelivery: order.estimatedDelivery
+      ? formatDate(order.estimatedDelivery.substring(0, 10))
+      : 'No',
+    deliveryStatus: order.deliveredAt
+      ? formatDate(order.deliveredAt.substring(0, 10))
+      : 'No',
+  }));
+
   return (
     <div className="mainContent">
       <Helmet>
@@ -59,56 +109,35 @@ const OrderList = () => {
       </Helmet>
       <h2>Todos los Pedidos</h2> <br />
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <LoadingBox />
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Usuario</th>
-              <th>Fecha</th>
-              <th>Total</th>
-              {/* <th>Estatus de pago</th> */}
-              <th>Fecha estimada de entrega</th>
-              <th>Estatus de entrega</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id.slice(-5)}</td>
-                <td>{order.shippingAddress.fullName}</td>
-                <td>{formatDate(order.createdAt)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                {/* <td>{order.isPaid ? formatDate(order.paidAt) : 'No'}</td> */}
-                <td>
-                  {order.estimatedDelivery
-                    ? formatDate(order.estimatedDelivery.substring(0, 10))
-                    : 'No'}
-                </td>
-                <td>
-                  {order.deliveredAt
-                    ? formatDate(order.deliveredAt.substring(0, 10))
-                    : 'No'}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="transparent-btn"
-                    onClick={() => {
-                      navigate(`/order/${order._id}`);
-                    }}
-                  >
-                    Detalle
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Box sx={{ height: '90%', width: '100%', background: 'white' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSizeOptions={[10, 25, 100]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar }}
+            sx={{
+              '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
+                color: 'green',
+              },
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+        </Box>
       )}
     </div>
   );

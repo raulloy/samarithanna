@@ -76,7 +76,7 @@ const Top = () => {
       <div className="headerSection flex">
         <div className="title">
           <h1>Bienvenido a Samarithanna.</h1>
-          <p>Hola {userInfo.name}, ¡qué bueno verte de nuevo!</p>
+          <p>Hola {userInfo.name}, ¡Qué bueno verte de nuevo!</p>
         </div>
 
         <div className="searchBar flex">
@@ -180,7 +180,17 @@ const Top = () => {
                 ¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.
               </p>
 
-              <button className="btn">Contactar</button>
+              <button
+                className="btn"
+                onClick={() =>
+                  window.open(
+                    'https://wa.me/5532667266?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido',
+                    '_blank'
+                  )
+                }
+              >
+                Contactar
+              </button>
             </div>
           </div>
         </div>

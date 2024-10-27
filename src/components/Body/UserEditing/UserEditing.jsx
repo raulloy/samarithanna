@@ -45,7 +45,7 @@ const UserEditing = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [userType, setUserType] = useState('user'); // Default to 'user'
+  const [userType, setUserType] = useState('user');
   const [isAdmitted, setIsAdmitted] = useState(false);
   const [daysFrequency, setDaysFrequency] = useState(7);
   const [minOrders, setMinOrders] = useState(1);
@@ -155,9 +155,10 @@ const UserEditing = () => {
                         onChange={(e) => setUserType(e.target.value)}
                         required
                       >
-                        <option value="admin">Admin</option>
-                        <option value="delivery">Delivery</option>
-                        <option value="user">User</option>
+                        <option value="admin">Administrador</option>
+                        <option value="logistics">Logística</option>
+                        <option value="delivery">Repartidor</option>
+                        <option value="user">Usuario</option>
                       </select>
                     </div>
                   </div>

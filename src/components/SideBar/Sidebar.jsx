@@ -140,7 +140,17 @@ const Sidebar = () => {
           <h3>¿Necesitas ayuda?</h3>
           <p>¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.</p>
 
-          <button className="btn">Contactar</button>
+          <button
+            className="btn"
+            onClick={() =>
+              window.open(
+                'https://wa.me/5532667266?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido',
+                '_blank'
+              )
+            }
+          >
+            Contactar
+          </button>
         </div>
       </div>
     </div>
