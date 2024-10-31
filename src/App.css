@@ -327,7 +327,7 @@ video {
     height: 100%;
     width: 100%;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 0.5rem;
   }
   .loginPage .container .videoDiv,
   .registerPage .container .videoDiv {
@@ -361,6 +361,7 @@ video {
   .loginPage .container .formDiv .headerDiv img,
   .registerPage .container .formDiv .headerDiv img {
     width: 40px;
+    display: none;
   }
   .loginPage .container .formDiv .headerDiv h3,
   .registerPage .container .formDiv .headerDiv h3 {
@@ -376,6 +377,10 @@ video {
   }
 }
 @media screen and (max-width: 678px) {
+  .loginPage,
+  .registerPage {
+    height: 90vh;
+  }
   .loginPage .container .videoDiv .textDiv .title,
   .registerPage .container .videoDiv .textDiv .title {
     font-size: 25px;
@@ -409,7 +414,7 @@ video {
 @media screen and (max-width: 927px) {
   .loginPage .container,
   .registerPage .container {
-    width: 85%;
+    width: 90%;
   }
 }
 ::-webkit-scrollbar {

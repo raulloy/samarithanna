@@ -59,8 +59,8 @@ const UserList = () => {
   }, [userInfo]);
 
   const columns = [
-    // { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'id', headerName: 'Nombre', width: 150 },
+    { field: 'id', headerName: 'ID', width: 50 },
+    { field: 'name', headerName: 'Nombre', width: 150 },
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'userType', headerName: 'Tipo de usuario', width: 150 },
     {
@@ -102,8 +102,8 @@ const UserList = () => {
   ];
 
   const rows = users.map((user) => ({
-    // id: user._id,
-    id: user.name,
+    id: user._id,
+    name: user.name,
     email: user.email,
     userType: user.userType,
     daysFrequency: user.daysFrequency,

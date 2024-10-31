@@ -35,7 +35,7 @@ const PlaceOrder = () => {
           orderItems: cart.cartItems,
           returnItems: returnItems,
           purchaseOrder: cart.purchaseOrder,
-          shippingAddress: cart.shippingAddress,
+          shippingAddress: cart.shippingAddress || '-',
           subtotal: cart.subtotal,
           ieps: cart.ieps,
           totalPrice: cart.total,
@@ -57,11 +57,18 @@ const PlaceOrder = () => {
     }
   };
 
+  // <----------- Double Check Pending ------------>
+  // useEffect(() => {
+  //   if (!cart.shippingAddress.address) {
+  //     navigate('/shipping');
+  //   }
+  // }, [cart.shippingAddress, navigate]);
+
   useEffect(() => {
-    if (!cart.shippingAddress.address) {
-      navigate('/shipping');
+    if (cart.cartItems.length === 0) {
+      navigate('/');
     }
-  }, [cart.shippingAddress, navigate]);
+  }, [cart, navigate]);
 
   return (
     <div className="mainContent">
@@ -76,9 +83,8 @@ const PlaceOrder = () => {
             <div className="card-body">
               <h3 className="card-title">Envío</h3>
               <p className="card-text">
-                <strong>Nombre:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Dirección: </strong> {cart.shippingAddress.address}{' '}
-                <br />
+                <strong>Nombre:</strong> {userInfo.name} <br />
+                <strong>Dirección: </strong> {userInfo?.shippingAddress} <br />
                 {cart.purchaseOrder && (
                   <>
                     <strong>Orden de Compra:</strong> {cart.purchaseOrder}

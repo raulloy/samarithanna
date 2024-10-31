@@ -38,7 +38,8 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    // navigate('/signin?redirect=/shipping');
+    navigate('/signin?redirect=/place-order');
   };
 
   return (
