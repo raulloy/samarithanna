@@ -32,6 +32,9 @@ const Listing = () => {
     fetchData();
   }, [userInfo]);
 
+  // Filter products based on userInfo.exclusive
+  const filteredProducts = products.filter((product) => !product.exclusive || (product.exclusive && userInfo.exclusive));
+
   return (
     <div className="lisitingSection">
       <div className="heading flex">
@@ -50,7 +53,7 @@ const Listing = () => {
         ) : !userInfo.isAdmitted ? (
           <MessageBox variant="info">{'Espera a ser admitido por un administrador, por favor cierra sesión'}</MessageBox>
         ) : (
-          products.map((product) => <Product product={product} key={product.slug} />)
+          filteredProducts.map((product) => <Product product={product} key={product.slug} />)
         )}
       </div>
     </div>
