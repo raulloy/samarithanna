@@ -49,10 +49,7 @@ const ProductEditing = () => {
 
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [
-    { loading, error, loadingUpdate, loadingDelete, successDelete },
-    dispatch,
-  ] = useReducer(reducer, {
+  const [{ loading, error, loadingUpdate, loadingDelete, successDelete }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
   });
@@ -65,6 +62,7 @@ const ProductEditing = () => {
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
+  const [isExclusive, setIsExclusive] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +77,7 @@ const ProductEditing = () => {
         setImage(data.image);
         setCategory(data.category);
         setDescription(data.description);
+        setIsExclusive(data.exclusive);
         dispatch({ type: 'FETCH_SUCCESS' });
       } catch (err) {
         dispatch({
@@ -110,6 +109,7 @@ const ProductEditing = () => {
           presentation,
           image,
           description,
+          exclusive: isExclusive,
         },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -169,88 +169,62 @@ const ProductEditing = () => {
                     <label htmlFor="name">Nombre</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                      />
+                      <input value={name} onChange={(e) => setName(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="address">Slug</label>
                     <div className="input flex">
                       {/* <MdLocationOn className="icon" /> */}
-                      <input
-                        value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
-                        required
-                      />
+                      <input value={slug} onChange={(e) => setSlug(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="city">Contenido Neto</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={productQty}
-                        onChange={(e) => setproductQty(e.target.value)}
-                        required
-                      />
+                      <input value={productQty} onChange={(e) => setproductQty(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="postalCode">Presentación</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={presentation}
-                        onChange={(e) => setPresentation(e.target.value)}
-                        required
-                      />
+                      <input value={presentation} onChange={(e) => setPresentation(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="postalCode">Precio</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        required
-                      />
+                      <input value={price} onChange={(e) => setPrice(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="postalCode">Imagen</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        required
-                      />
+                      <input value={image} onChange={(e) => setImage(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="postalCode">Categoría</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        required
-                      />
+                      <input value={category} onChange={(e) => setCategory(e.target.value)} required />
                     </div>
                   </div>
                   <div className="inputDiv">
                     <label htmlFor="postalCode">Descripción</label>
                     <div className="input flex">
                       {/* <FaUserShield className="icon" /> */}
-                      <input
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                      />
+                      <input value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    </div>
+                  </div>
+                  <div className="inputDiv">
+                    <label htmlFor="isExclusive">Exclusivo</label>
+                    <div className="input flex">
+                      <input type="checkbox" id="isExclusive" checked={isExclusive} onChange={(e) => setIsExclusive(e.target.checked)} />
                     </div>
                   </div>
 
@@ -259,12 +233,7 @@ const ProductEditing = () => {
                     {/* <AiOutlineSwapRight className="icon" /> */}
                   </button>
                   {loadingUpdate && <LoadingBox></LoadingBox>}
-                  <button
-                    type="button"
-                    onClick={() => deleteHandler()}
-                    className="btn flex"
-                    style={{ background: 'red' }}
-                  >
+                  <button type="button" onClick={() => deleteHandler()} className="btn flex" style={{ background: 'red' }}>
                     <span>Eliminar</span>
                     {/* <AiOutlineSwapRight className="icon" /> */}
                   </button>

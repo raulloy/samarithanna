@@ -9,6 +9,7 @@ import { Store } from '../../../Store';
 import { apiURL, formatDate, getError } from '../../../utils';
 import LoadingBox from '../LoadingBox/LoadingBox';
 import MessageBox from '../MessageBox/MessageBox';
+import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -55,6 +56,31 @@ const OrderList = () => {
     fetchData();
   }, [userInfo]);
 
+  async function orderReadyHandler(estimatedDelivery, orderID) {
+    if (!estimatedDelivery) return;
+    try {
+      dispatch({ type: 'FETCH_REQUEST' });
+      const { data } = await axios.put(
+        `${apiURL}/api/orders/${orderID}/ready`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+
+      const updatedOrder = data.order;
+
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        payload: orders.map((order) => (order._id === updatedOrder._id ? updatedOrder : order)),
+      });
+      toast.success('Order is ready');
+    } catch (err) {
+      toast.error(getError(err));
+      dispatch({ type: 'FETCH_FAIL' });
+    }
+  }
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'user', headerName: 'Usuario', width: 150 },
@@ -78,28 +104,37 @@ const OrderList = () => {
       width: 150,
       sortable: false,
       renderCell: (params) => (
-        <button
-          type="button"
-          className="transparent-btn"
-          onClick={() => navigate(`/order/${params.row.id}`)}
-        >
+        <button type="button" className="transparent-btn" onClick={() => navigate(`/order/${params.row.id}`)}>
           Detalle
         </button>
       ),
+    },
+    {
+      field: 'order_on_the_way',
+      headerName: '',
+      width: 200,
+      sortable: false,
+      renderCell: (params) =>
+        params.row.isReady ? (
+          'Correo enviado'
+        ) : params.row.estimatedDelivery === 'No' ? (
+          'Sin fecha de entrega'
+        ) : (
+          <button type="button" className="transparent-btn" onClick={() => orderReadyHandler(params.row.estimatedDelivery, params.row.id)}>
+            Enviar aviso de salida
+          </button>
+        ),
     },
   ];
 
   const rows = orders.map((order) => ({
     id: order._id,
-    user: order.shippingAddress.fullName,
+    user: order?.shippingAddress?.fullName || 'No name',
     date: order.createdAt ? order.createdAt.substring(0, 10) : '1970-01-01',
     total: order.totalPrice.toFixed(2),
-    estimatedDelivery: order.estimatedDelivery
-      ? formatDate(order.estimatedDelivery.substring(0, 10))
-      : 'No',
-    deliveryStatus: order.deliveredAt
-      ? formatDate(order.deliveredAt.substring(0, 10))
-      : 'No',
+    estimatedDelivery: order.estimatedDelivery ? formatDate(order.estimatedDelivery.substring(0, 10)) : 'No',
+    deliveryStatus: order.deliveredAt ? formatDate(order.deliveredAt.substring(0, 10)) : 'No',
+    isReady: order.isReady,
   }));
 
   return (

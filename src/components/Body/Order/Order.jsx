@@ -45,11 +45,7 @@ const Order = () => {
 
     const sendEmail = async () => {
       try {
-        await axios.put(
-          `${apiURL}/api/orders/${order._id}/order-processed`,
-          {},
-          { headers: { authorization: `Bearer ${userInfo.token}` } }
-        );
+        await axios.put(`${apiURL}/api/orders/${order._id}/order-processed`, {}, { headers: { authorization: `Bearer ${userInfo.token}` } });
         console.log('Email Sent');
         toast.success('Your order has been received');
       } catch (error) {
@@ -150,14 +146,10 @@ const Order = () => {
             <div className="card-body">
               <h3 className="card-title">Envío</h3>
               <p className="card-text">
-                <strong>Nombre:</strong> {order.shippingAddress.fullName} <br />
-                <strong>Dirección: </strong> {order.shippingAddress.address}
+                <strong>Nombre:</strong> {order.shippingAddress?.fullName} <br />
+                <strong>Dirección: </strong> {order.shippingAddress?.address}
               </p>
-              {order.isDelivered ? (
-                <MessageBox variant="success">Entregado</MessageBox>
-              ) : (
-                <MessageBox variant="danger">No Entregado</MessageBox>
-              )}
+              {order.isDelivered ? <MessageBox variant="success">Entregado</MessageBox> : <MessageBox variant="danger">No Entregado</MessageBox>}
             </div>
           </div>
 
@@ -185,11 +177,7 @@ const Order = () => {
                   <div className="list-group-item" key={item._id}>
                     <div className="item-row">
                       <div className="item-info">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="item-image"
-                        />
+                        <img src={item.image} alt={item.name} className="item-image" />
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
                       <div className="item-quantity">{item.quantity}</div>
@@ -208,11 +196,7 @@ const Order = () => {
                   <div className="list-group-item" key={item.slug}>
                     <div className="item-row">
                       <div className="item-info">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="item-image"
-                        />
+                        <img src={item.image} alt={item.name} className="item-image" />
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
                       <div className="item-quantity">{item.quantity}</div>
@@ -255,76 +239,48 @@ const Order = () => {
                   </div>
                 </div>
 
-                {(userInfo.userType === 'admin' ||
-                  userInfo.userType === 'delivery') &&
-                  !order.estimatedDelivery && (
-                    <div className="list-group-item">
-                      <div className="d-grid">
-                        <form
-                          className="form grid"
-                          onSubmit={estimatedDeliveryHandler}
-                        >
-                          <div className="inputDiv">
-                            <label htmlFor="date">
-                              Fecha estimada de entrega
-                            </label>
-                            <div className="input flex">
-                              {/* <FaUserShield className="icon" /> */}
-                              <input
-                                type="date"
-                                value={date}
-                                className="datePicker"
-                                required
-                                id="date"
-                                onChange={(e) => setDate(e.target.value)}
-                              />
-                            </div>
+                {(userInfo.userType === 'admin' || userInfo.userType === 'delivery') && !order.estimatedDelivery && (
+                  <div className="list-group-item">
+                    <div className="d-grid">
+                      <form className="form grid" onSubmit={estimatedDeliveryHandler}>
+                        <div className="inputDiv">
+                          <label htmlFor="date">Fecha estimada de entrega</label>
+                          <div className="input flex">
+                            {/* <FaUserShield className="icon" /> */}
+                            <input type="date" value={date} className="datePicker" required id="date" onChange={(e) => setDate(e.target.value)} />
                           </div>
+                        </div>
 
-                          <button type="submit" className="btn flex">
-                            <span>Continuar</span>
-                            <AiOutlineSwapRight className="icon" />
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  )}
-
-                {(userInfo.userType === 'admin' ||
-                  userInfo.userType === 'delivery') &&
-                  !order.isReady &&
-                  order.estimatedDelivery && (
-                    <div className="list-group-item">
-                      <div className="d-grid">
-                        <button
-                          type="button"
-                          onClick={orderReadyHandler}
-                          className="btn flex"
-                        >
-                          <span>Pedido listo para enviar</span>
+                        <button type="submit" className="btn flex">
+                          <span>Continuar</span>
+                          <AiOutlineSwapRight className="icon" />
                         </button>
-                        {loading && <LoadingBox></LoadingBox>}
-                      </div>
+                      </form>
                     </div>
-                  )}
+                  </div>
+                )}
 
-                {(userInfo.userType === 'admin' ||
-                  userInfo.userType === 'delivery') &&
-                  !order.isDelivered &&
-                  order.isReady && (
-                    <div className="list-group-item">
-                      <div className="d-grid">
-                        <button
-                          type="button"
-                          onClick={deliverOrderHandler}
-                          className="btn flex"
-                        >
-                          <span>Pedido entregado</span>
-                        </button>
-                        {loading && <LoadingBox></LoadingBox>}
-                      </div>
+                {(userInfo.userType === 'admin' || userInfo.userType === 'delivery') && !order.isReady && order.estimatedDelivery && (
+                  <div className="list-group-item">
+                    <div className="d-grid">
+                      <button type="button" onClick={orderReadyHandler} className="btn flex">
+                        <span>Pedido listo para enviar</span>
+                      </button>
+                      {loading && <LoadingBox></LoadingBox>}
                     </div>
-                  )}
+                  </div>
+                )}
+
+                {(userInfo.userType === 'admin' || userInfo.userType === 'delivery') && !order.isDelivered && order.isReady && (
+                  <div className="list-group-item">
+                    <div className="d-grid">
+                      <button type="button" onClick={deliverOrderHandler} className="btn flex">
+                        <span>Pedido entregado</span>
+                      </button>
+                      {loading && <LoadingBox></LoadingBox>}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

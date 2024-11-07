@@ -26,6 +26,13 @@ const PlaceOrder = () => {
   cart.total = round2(cart.subtotal + cart.ieps);
 
   const placeOrderHandler = async () => {
+    localStorage.setItem(
+      'shippingAddress',
+      JSON.stringify({
+        fullName: userInfo.name,
+        address: 'Dirección de entrega',
+      })
+    );
     try {
       dispatch({ type: 'CREATE_REQUEST' });
 
@@ -35,7 +42,10 @@ const PlaceOrder = () => {
           orderItems: cart.cartItems,
           returnItems: returnItems,
           purchaseOrder: cart.purchaseOrder,
-          shippingAddress: cart.shippingAddress || '-',
+          shippingAddress: {
+            fullName: userInfo.name,
+            address: 'Dirección de entrega',
+          },
           subtotal: cart.subtotal,
           ieps: cart.ieps,
           totalPrice: cart.total,
@@ -114,11 +124,7 @@ const PlaceOrder = () => {
                   <div className="list-group-item" key={item._id}>
                     <div className="item-row">
                       <div className="item-info">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="item-image"
-                        />
+                        <img src={item.image} alt={item.name} className="item-image" />
                         <div className="item-quantity">{item.quantity}</div>
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
@@ -137,11 +143,7 @@ const PlaceOrder = () => {
                   <div className="list-group-item" key={item._id}>
                     <div className="item-row">
                       <div className="item-info">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="item-image"
-                        />
+                        <img src={item.image} alt={item.name} className="item-image" />
                         <div className="item-quantity">{item.quantity}</div>
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </div>
@@ -162,9 +164,7 @@ const PlaceOrder = () => {
                 <div className="list-group-item">
                   <div className="summary-row">
                     <div>Artículos</div>
-                    <div>
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                    </div>
+                    <div>{cart.cartItems.reduce((a, c) => a + c.quantity, 0)}</div>
                     {/* <div>${cart.itemsPrice.toFixed(2)}</div> */}
                   </div>
                 </div>
@@ -188,11 +188,7 @@ const PlaceOrder = () => {
                 </div>
                 <div className="list-group-item">
                   <div className="d-grid">
-                    <button
-                      type="button"
-                      onClick={placeOrderHandler}
-                      disabled={cart.cartItems.length === 0}
-                    >
+                    <button type="button" onClick={placeOrderHandler} disabled={cart.cartItems.length === 0}>
                       Realizar pedido
                     </button>
                     {loading && <LoadingBox></LoadingBox>}

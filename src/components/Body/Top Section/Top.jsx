@@ -81,12 +81,7 @@ const Top = () => {
 
         <div className="searchBar flex">
           <form className="d-flex me-auto" onSubmit={submitHandler}>
-            <input
-              type="text"
-              placeholder="Jocoque, Pan Árabe..."
-              id="searchBox"
-              onChange={(e) => setQuery(e.target.value)}
-            />
+            <input type="text" placeholder="Jocoque, Pan Árabe..." id="searchBox" onChange={(e) => setQuery(e.target.value)} />
             <button type="submit" id="button-search" className="search-btn">
               <BiSearchAlt className="icon" />
             </button>
@@ -98,9 +93,7 @@ const Top = () => {
             <Link to="/cart">
               <MdOutlineShoppingCart className="icon" />
             </Link>
-            <span className="cart-quantity">
-              {cart.cartItems.reduce((acc, curr) => acc + curr.quantity, 0)}
-            </span>
+            <span className="cart-quantity">{cart.cartItems.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
           </div>
           <div className="adminImage">
             <img src={img} alt="Admin Image" />
@@ -138,20 +131,11 @@ const Top = () => {
 
                 <div className="flex">
                   <span>
-                    Hoy <br />{' '}
-                    <small>
-                      {summary.todayOrdersCount === 1
-                        ? summary.todayOrdersCount + ' Pedido'
-                        : summary.todayOrdersCount + ' Pedidos'}
-                    </small>
+                    Hoy <br /> <small>{summary.todayOrdersCount === 1 ? summary.todayOrdersCount + ' Pedido' : summary.todayOrdersCount + ' Pedidos'}</small>
                   </span>
                   <span>
                     Este mes <br />{' '}
-                    <small>
-                      {summary.monthOrdersCount === 1
-                        ? summary.monthOrdersCount + ' Pedido'
-                        : summary.monthOrdersCount + ' Pedidos'}
-                    </small>
+                    <small>{summary.monthOrdersCount === 1 ? summary.monthOrdersCount + ' Pedido' : summary.monthOrdersCount + ' Pedidos'}</small>
                   </span>
                 </div>
 
@@ -176,19 +160,9 @@ const Top = () => {
               <div className="circle2"></div>
 
               <h3>¿Necesitas ayuda?</h3>
-              <p>
-                ¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.
-              </p>
+              <p>¿Necesitas ayuda con tu pedido? Ponte en contacto con nosotros.</p>
 
-              <button
-                className="btn"
-                onClick={() =>
-                  window.open(
-                    'https://wa.me/5532667266?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido',
-                    '_blank'
-                  )
-                }
-              >
+              <button className="btn" onClick={() => window.open('https://wa.me/5532667266?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido', '_blank')}>
                 Contactar
               </button>
             </div>

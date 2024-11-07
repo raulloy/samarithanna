@@ -13,14 +13,11 @@ const Listing = () => {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, products }, dispatch] = useReducer(
-    logger(productsReducer),
-    {
-      products: [],
-      loading: true,
-      error: '',
-    }
-  );
+  const [{ loading, error, products }, dispatch] = useReducer(logger(productsReducer), {
+    products: [],
+    loading: true,
+    error: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,15 +48,9 @@ const Listing = () => {
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : !userInfo.isAdmitted ? (
-          <MessageBox variant="info">
-            {
-              'Espera a ser admitido por un administrador, por favor cierra sesión'
-            }
-          </MessageBox>
+          <MessageBox variant="info">{'Espera a ser admitido por un administrador, por favor cierra sesión'}</MessageBox>
         ) : (
-          products.map((product) => (
-            <Product product={product} key={product.slug} />
-          ))
+          products.map((product) => <Product product={product} key={product.slug} />)
         )}
       </div>
     </div>

@@ -11,6 +11,7 @@ const Product = (props) => {
   const [quantity, setQuantity] = useState(1);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
   const {
     cart: { cartItems },
   } = state;
@@ -53,19 +54,11 @@ const Product = (props) => {
       </Link>
       <div className="cart-buttons">
         <div className="buttons flex" style={{ marginTop: 10 }}>
-          <button
-            className="qty-btn"
-            onClick={decreaseQuantity}
-            disabled={quantity === 1}
-          >
+          <button className="qty-btn" onClick={decreaseQuantity} disabled={quantity === 1}>
             <FaMinus />
           </button>{' '}
           <span>{quantity}</span>{' '}
-          <button
-            className="qty-btn"
-            onClick={increaseQuantity}
-            disabled={quantity === 100}
-          >
+          <button className="qty-btn" onClick={increaseQuantity} disabled={quantity === 100}>
             <FaPlus />
           </button>
         </div>
